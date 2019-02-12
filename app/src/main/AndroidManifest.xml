@@ -81,7 +81,13 @@
             android:name="com.psl.fantasy.league.season2.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>-->
+        </activity>
         <activity
             android:name="com.psl.fantasy.league.season2.UserDashboard"
             android:label="@string/title_activity_user_dashboard"

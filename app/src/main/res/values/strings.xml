@@ -7,7 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Sign in</string>
     <string name="facebook_app_id">732428703807316</string>
-    <string name="fb_login_protocol_scheme">fb170635526884334</string>
+    <string name="fb_login_protocol_scheme">fb732428703807316</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 

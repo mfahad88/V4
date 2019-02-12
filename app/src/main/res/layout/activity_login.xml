@@ -82,10 +82,10 @@
             android:id="@+id/btn_Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/txt_MobileNumber"
             android:layout_below="@id/txt_Pin"
             android:layout_marginRight="4dp"
             android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/btn_login" />
 
         <Button
@@ -95,6 +95,7 @@
             android:layout_alignLeft="@id/txt_MobileNumber"
             android:layout_below="@id/txt_Pin"
             android:layout_marginLeft="4dp"
+            android:visibility="gone"
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_register_" />
 

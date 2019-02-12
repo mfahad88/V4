@@ -69,6 +69,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.psl.classes.Config;
 import com.psl.transport.Connection;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
@@ -157,7 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText et_confirmPassword;
     Button btn_register_first;
     LinearLayout layout_first;
-
+    LoginButton txtFbLogin;
     TextView weekTxtView, fairTxtView, strongTxtView;
     LinearLayout passwordStrengthLayout;
     TextView password_strengthTxt;
@@ -229,7 +230,8 @@ public class RegisterActivity extends AppCompatActivity {
         spinner_age = (Spinner) findViewById(R.id.spinner_age);
         spinner_gender = (Spinner) findViewById(R.id.spinner_gender);
         btn_registeration_end = (Button) findViewById(R.id.btnRegister_new);
-
+        txtFbLogin=findViewById(R.id.login_button);
+        //callbackManager = CallbackManager.Factory.create();
 
         et_enterpassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -370,7 +372,6 @@ public class RegisterActivity extends AppCompatActivity {
                     et_email.requestFocus();
                     return;
                 }
-
                 if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     showAlert("Please enter a valid email address");
                     et_email.requestFocus();
@@ -439,9 +440,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    setupFacebook();
-                    mAccessTokenTracker.startTracking();
-                    mLoginManager.logInWithReadPermissions(RegisterActivity.this, Arrays.asList("public_profile", "email"));
+                    //mAccessTokenTracker.startTracking();
+//                    mLoginManager.logInWithReadPermissions(RegisterActivity.this, Arrays.asList("public_profile", "email"));
+//                    setupFacebook();
+                    txtFbLogin.setReadPermissions("email", "public_profile");
+                    txtFbLogin.performClick();
+                    FbLogin();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -500,6 +505,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
         callbackManager = CallbackManager.Factory.create();
     }
+
+
 
     String getAccountId() {
         try {
@@ -711,7 +718,6 @@ public class RegisterActivity extends AppCompatActivity {
                         imgProfileImage.setImageDrawable(myBackground);
                     }
                 }
-
                 break;
             case 1:
                 if(resultCode == RESULT_OK){
@@ -723,11 +729,10 @@ public class RegisterActivity extends AppCompatActivity {
                     int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
                     cursor.moveToFirst();
                     String selectedImagePath = cursor.getString(column_index);
-
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
                     BitmapFactory.decodeFile(selectedImagePath, options);
-                    final int REQUIRED_SIZE = 200;
+                    grand int REQUIRED_SIZE = 200;
                     int scale = 1;
                     while (options.outWidth / scale / 2 >= REQUIRED_SIZE
                             && options.outHeight / scale / 2 >= REQUIRED_SIZE)
@@ -745,9 +750,7 @@ public class RegisterActivity extends AppCompatActivity {
                         imgProfileImage.setImageDrawable(myBackground);
                     }
                 }
-
                 break;
-
         }
     }*/
 
@@ -807,30 +810,30 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
-            try {
-                switch (requestCode) {
-                    case RequestPermissionCode:
+        try {
+            switch (requestCode) {
+                case RequestPermissionCode:
 
-                        if (grantResults.length > 0) {
+                    if (grantResults.length > 0) {
 
-                            boolean GetAccountPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                            boolean ReadPhoneStatePermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                        boolean GetAccountPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                        boolean ReadPhoneStatePermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                            if (GetAccountPermission && ReadPhoneStatePermission) {
+                        if (GetAccountPermission && ReadPhoneStatePermission) {
 
-                                //Toast.makeText(RegisterActivity.this, "Permission Granted", Toast.LENGTH_LONG).show();
-                                getAccountId();
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(RegisterActivity.this, "Permission Granted", Toast.LENGTH_LONG).show();
+                            getAccountId();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
 
-                            }
                         }
+                    }
 
-                        break;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                    break;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     class GmailAsynctasc extends AsyncTask<String, String, String> {
@@ -909,8 +912,8 @@ public class RegisterActivity extends AppCompatActivity {
             handleSignInResult(result);
         }
         //callbackManager.onActivityResult(requestCode, resultCode, data);
-        if (mFacebookCallbackManager != null)
-            mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if (callbackManager != null)
+            callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void setupInit() {
@@ -942,15 +945,75 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+
+    private void FbLogin(){
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken mAccessToken = loginResult.getAccessToken();
+                //getUserProfile(mAccessToken);
+                GraphRequest request = GraphRequest.newMeRequest(
+                        mAccessToken,
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                    //You can fetch user info like this…
+                                    //object.getJSONObject(“picture”).
+                                    //getJSONObject("data").getString("url");
+                                    //object.getString("name");
+                                    //object.getString(“email”));
+                                    //object.getString(“id”));
+
+                                    loggedin = true;
+                                    register_via = "facebook";
+
+                                    final String email = object.optString("email");
+                                    final String name = object.optString("first_name") + " " + object.optString("last_name");
+                                    final String id = object.optString("id");
+
+                                    final String f_name = object.optString("first_name");
+                                    final String l_name = object.optString("last_name");
+
+                                    et_fistname.setText(f_name);
+                                    et_lastname.setText(l_name);
+                                    et_email.setText(email);
+
+                                    layout_registeration.setVisibility(View.VISIBLE);
+                                    layout_first.setVisibility(View.GONE);
+                                    which_layout = "register";
+
+                                    //tv.setText("Firstname: "+object.getString("first_name")+"\nLastName: "+object.getString("last_name")+"\nEmail: "+object.getString("email")+"\nId: "+object.getString("id"));
+
+
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,first_name,last_name,email,picture.width(200)");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
     private void setupFacebook() {
         mLoginManager = LoginManager.getInstance();
         mFacebookCallbackManager = CallbackManager.Factory.create();
-        mAccessTokenTracker = new AccessTokenTracker() {
+        /*mAccessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                 // handle
             }
-        };
+        };*/
 
         LoginManager.getInstance().registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override

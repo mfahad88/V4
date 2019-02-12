@@ -1,6 +1,7 @@
 package com.psl.fantasy.league.season2;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -20,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -44,12 +47,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+
+import static com.facebook.share.internal.DeviceShareDialogFragment.TAG;
 
 
 public class SplashScreen extends Activity {
@@ -65,6 +72,7 @@ public class SplashScreen extends Activity {
     String device_information;
     MediaPlayer audioPlayer;
     public static final int MY_PERMISSIONS_REQUEST_STORAGE = 99;
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +100,20 @@ public class SplashScreen extends Activity {
 
         audioPlayer= MediaPlayer.create(SplashScreen.this,R.raw.apni_audio);
         audioPlayer.start();
-
+        /*try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i(this.getClass().getName(), "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(this.getClass().getName(), "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e(this.getClass().getName(), "printHashKey()", e);
+        }
+*/
         try {
             //lx1();
 

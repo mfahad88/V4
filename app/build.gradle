@@ -7,8 +7,8 @@ android {
         applicationId "com.psl.fantasy.league"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 35
-        versionName "1.9.6"
+        versionCode 37
+        versionName "1.9.8"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -43,8 +43,10 @@ allprojects {
             url 'http://artifactory.paysyslabs.com/instascan-complete'
 
             credentials {
-                  username = "jsbank"
-                    password = "AP8oMALTkGzMksr2nAq4MdJtuzL"
+                username = "jsbank-developer"
+                password = "AP2vCgmVSdzECzGGbatSnP2Me6L"
+                  /*username = "jsbank"
+                    password = "AP8oMALTkGzMksr2nAq4MdJtuzL"*/
                /* username = "jsbank-developer"
                 password = "AP9N3fsG4oAMheeKJuxJDhNVQaE"*/
             }

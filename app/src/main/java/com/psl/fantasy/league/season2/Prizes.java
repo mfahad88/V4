@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 public class Prizes extends Fragment {
 
     ImageView iv_title;
-    ImageView iv_prizes,iv_prizes2,iv_prizes3;
+    ImageView iv_prizes;
     LinearLayout rows_layout, image_layout;
     Button btn_back;
     ImageView iv_row_daily, iv_row_weekly, iv_row_grand;
@@ -41,8 +41,7 @@ public class Prizes extends Fragment {
             iv_row_grand = (ImageView) view.findViewById(R.id.grand_prizes);
 
             iv_prizes = (ImageView) view.findViewById(R.id.prize_image);
-            iv_prizes2 = (ImageView) view.findViewById(R.id.prize_image2);
-            iv_prizes3 = (ImageView) view.findViewById(R.id.prize_image3);
+
             iv_title = (ImageView) view.findViewById(R.id.title);
 
             ((Button) view.findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
@@ -66,12 +65,10 @@ public class Prizes extends Fragment {
                     try {
                         rows_layout.setVisibility(View.GONE);
                         image_layout.setVisibility(View.VISIBLE);
-                        iv_prizes2.setVisibility(View.VISIBLE);
-                        iv_prizes3.setVisibility(View.VISIBLE);
 
-                        iv_prizes.setBackgroundDrawable(getResources().getDrawable(R.drawable.samsung));
-                        iv_prizes2.setBackgroundDrawable(getResources().getDrawable(R.drawable.huawei));
-                        iv_prizes3.setBackgroundDrawable(getResources().getDrawable(R.drawable.led));
+
+                        iv_prizes.setBackgroundDrawable(getResources().getDrawable(R.drawable.daily));
+
                         iv_title.setBackgroundDrawable(getResources().getDrawable(R.drawable.title_daily_prizes));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -86,13 +83,11 @@ public class Prizes extends Fragment {
                     try {
                         rows_layout.setVisibility(View.GONE);
                         image_layout.setVisibility(View.VISIBLE);
-                        iv_prizes2.setVisibility(View.VISIBLE);
-                        iv_prizes3.setVisibility(View.VISIBLE);
 
 
-                        iv_prizes.setBackgroundDrawable(getResources().getDrawable(R.drawable.dubai));
-                        iv_prizes2.setBackgroundDrawable(getResources().getDrawable(R.drawable.iphone));
-                        iv_prizes3.setBackgroundDrawable(getResources().getDrawable(R.drawable.ps4));
+
+                        iv_prizes.setBackgroundDrawable(getResources().getDrawable(R.drawable.weekend));
+
                         iv_title.setBackgroundDrawable(getResources().getDrawable(R.drawable.title_weekly_prizes));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -106,10 +101,9 @@ public class Prizes extends Fragment {
                     try {
                         rows_layout.setVisibility(View.GONE);
                         image_layout.setVisibility(View.VISIBLE);
-                        iv_prizes2.setVisibility(View.GONE);
-                        iv_prizes3.setVisibility(View.GONE);
 
-                        iv_prizes.setBackgroundDrawable(getResources().getDrawable(R.drawable.corolla));
+
+                        iv_prizes.setBackgroundDrawable(getResources().getDrawable(R.drawable.grand));
 
                         iv_title.setBackgroundDrawable(getResources().getDrawable(R.drawable.title_grand_prizes));
                     } catch (Exception e) {
