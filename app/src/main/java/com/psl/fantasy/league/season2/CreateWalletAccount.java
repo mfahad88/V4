@@ -101,6 +101,7 @@ public class CreateWalletAccount extends Fragment {
         if (mNmbr.length() == 11) {
             txtMobNumber.setText(mNmbr);
             txtMobNumber1.setText(mNmbr.substring(4));
+
         }
         txtCNIC.setText(sharedPreferences.getString(Config.CNIC, ""));
 

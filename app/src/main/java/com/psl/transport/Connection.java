@@ -46,7 +46,7 @@ import okhttp3.Response;
 
 
 public class Connection {
-	public static final String TAG="fantasy.league";
+	public static final String TAG="'fantasy.league.season2";
 	public  String Soap_Action="";
 	public  final static String NameSpace="http://tempuri.org/";
 	private SoapObject object,result;
@@ -113,7 +113,7 @@ public class Connection {
 			soapRequest.addProperty("registered_via", register_via);
 			soapRequest.addProperty("operating_system", "Android");
 
-			Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+			////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 			result=getResult(soapRequest,MethodName);
 		}catch (Exception e)
 		{
@@ -134,7 +134,7 @@ public class Connection {
 		soapRequest.addProperty("package_name", package_name);
 		soapRequest.addProperty("app_version", app_version);
 
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -153,7 +153,7 @@ public class Connection {
 		soapRequest.addProperty("picurl", picture);
 		soapRequest.addProperty("jswalletno", jswalletno);
 
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 
 		result=getResult(soapRequest,MethodName);
 		return result;
@@ -170,7 +170,7 @@ public class Connection {
 		soapRequest.addProperty("username", email);
 		soapRequest.addProperty("password", password);
 		soapRequest.addProperty("operatingSystem", "Android");
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -185,7 +185,7 @@ public class Connection {
 		soapRequest.addProperty("lat", lati);
 		soapRequest.addProperty("lng", longi);
 		soapRequest.addProperty("dist", "5");
-		Log.i(soapRequest.getName()+"------>",soapRequest.toString());
+		//Log.i(soapRequest.getName()+"------>",soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -197,7 +197,7 @@ public class Connection {
 		soapRequest.addProperty("w_username", w_username);
 		soapRequest.addProperty("w_password", w_password);
 		soapRequest.addProperty("duedate", duedate);
-		Log.i(soapRequest.getName()+"------>",soapRequest.toString());
+		//Log.i(soapRequest.getName()+"------>",soapRequest.toString());
 
 		result=getResult(soapRequest,MethodName);
 		return result;
@@ -234,7 +234,7 @@ public class Connection {
 					stringBuilder.append(response + "\n");
 				}
 				bufferedReader.close();
-				Log.d("Result Value ", stringBuilder.toString());
+				//Log.d("Result Value ", stringBuilder.toString());
 
 				JSONObject jsonObject = new JSONObject(stringBuilder.toString());
 				//  JSONArray jsonArray = jsonObject.get("access_token");
@@ -526,7 +526,7 @@ public class Connection {
 
 		catch(Exception e)
 		{
-			Log.e(this.getClass().getName()+"---->",e.getMessage());
+			//Log.e(this.getClass().getName()+"---->",e.getMessage());
 			e.printStackTrace();
 			return "-1An error occured. Please try again";
 
@@ -856,8 +856,8 @@ public class Connection {
 								String AccountTitle,String BirthPlace,String PresentAddress,String CnicStatus,String CnicExpiry,String DOB,
 								String FatherHusbandName,String MotherMaiden,String Gender,String AccountType)
 	{
-		String strJSONBody="{\"Cnic\":\"" + CNIC + "\"," +
-				"\"OTP\":\"" + OTP+ "\"," +
+		String strJSONBody="{\"OTP\":\"" + OTP + "\"," +
+				"\"Cnic\":\"" + CNIC+ "\"," +
 				"\"MobileNumber\":\"" + mobNumber+ "\"," +
 				"\"ConsumerName\":\"" + ConsumerName+ "\"," +
 				"\"AccountTitle\":\"" + AccountTitle+ "\"," +
@@ -937,6 +937,7 @@ public class Connection {
 					.build();
 
 			Response response = client.newCall(request).execute();
+			//Log.i(TAG,"Response---->"+response.body().string());
 			return  response.body().string();//.toString();//.toString();
 		}
 		catch (Exception e)
@@ -1036,7 +1037,7 @@ int retry=0;
 			envelope.dotNet = true;
 			envelope.setOutputSoapObject(soapAddRequest);
 			envelope.addMapping(NameSpace, "Transaction_Details", transaction_detail.getClass());
-			Log.i(TAG,soapDetails.getName()+"------>"+soapDetails.toString());
+			//Log.i(TAG,soapDetails.getName()+"------>"+soapDetails.toString());
 			if(URL.startsWith("https"))
 			{
 				HttpsTransporSE HttpTransportSE = new HttpsTransporSE(URL, 0, "", 120000);
@@ -1079,7 +1080,7 @@ int retry=0;
 
 
 		}
-		Log.i(TAG+"-------->",result);
+		//Log.i(TAG+"-------->",result);
 		return result;
 	}
 
@@ -1095,7 +1096,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("jswallet", wallet_no);
-		Log.i(soapRequest.getName()+"------>",soapRequest.toString());
+		//Log.i(soapRequest.getName()+"------>",soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1119,7 +1120,7 @@ int retry=0;
 		soapRequest.addProperty("wallet_id",wallet_id );
 		soapRequest.addProperty("presentAddress",presentAddress );
 
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 
 		result=getResult(soapRequest,MethodName,"http://translator.tecthis.com/service1.asmx");
 		return result;
@@ -1137,7 +1138,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("action", action);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
         result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1151,7 +1152,7 @@ int retry=0;
         soapRequest.addProperty("w_username", Config.w1);
         soapRequest.addProperty("w_password", Config.w2);
         soapRequest.addProperty("user_id", user_id);//
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
         result=getResult(soapRequest,MethodName);
         return result;
     }
@@ -1165,7 +1166,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("user_id", user_id);// need to change
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1180,7 +1181,7 @@ int retry=0;
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("team_id", team_id);
 		soapRequest.addProperty("match_id", match_id);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1193,7 +1194,7 @@ int retry=0;
 
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1206,7 +1207,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("user_id", userID);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1221,7 +1222,7 @@ int retry=0;
 		soapRequest.addProperty("user_id", userID);
 		soapRequest.addProperty("notification_id", notifID);
 		soapRequest.addProperty("action", action);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 
 		result=getResult(soapRequest,MethodName);
 		return result;
@@ -1234,7 +1235,7 @@ int retry=0;
 
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1249,7 +1250,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("user_id", user_id);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1264,7 +1265,7 @@ int retry=0;
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("booster_id", booster_id);
 		soapRequest.addProperty("user_id", user_id);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1277,7 +1278,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		//soapRequest.addProperty("action", action);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1289,7 +1290,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("action", action);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1300,7 +1301,7 @@ int retry=0;
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("action", action);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1314,7 +1315,7 @@ int retry=0;
 		soapRequest.addProperty("w_password", Config.w2);
 		soapRequest.addProperty("date", date);
         soapRequest.addProperty("team", user_id);
-		Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 		result=getResult(soapRequest,MethodName);
 		return result;
 	}
@@ -1371,7 +1372,7 @@ int retry=0;
 			envelope.dotNet = true;
 			envelope.setOutputSoapObject(soapAddRequest);
 			envelope.addMapping(NameSpace, "PlayerAttributes", player.getClass());
-			Log.i(TAG,soapAddRequest.getName()+"------>"+soapAddRequest.toString());
+			//Log.i(TAG,soapAddRequest.getName()+"------>"+soapAddRequest.toString());
 			if(URL.startsWith("https"))
 			{
 				HttpsTransporSE HttpTransportSE = new HttpsTransporSE(URL, 0, "", 30000);
@@ -1394,7 +1395,7 @@ int retry=0;
 			return "";
 
 		}
-		Log.i(TAG,result);
+		//Log.i(TAG,result);
 		return result;
 	}
 	private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
@@ -1410,7 +1411,7 @@ int retry=0;
 			result.append("=");
 			result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
 		}
-		Log.i(TAG,result.toString());
+		//Log.i(TAG,result.toString());
 		return result.toString();
 	}
 	//int retry=0;
@@ -1506,7 +1507,7 @@ int retry=0;
 			else
 				result="-1An error occured. Please try again";
 		}
-		Log.i(TAG,MethodName+"------>"+result);
+		//Log.i(TAG,MethodName+"------>"+result);
 		return result;
 	}
 	public void ConnectForSingleNode(){

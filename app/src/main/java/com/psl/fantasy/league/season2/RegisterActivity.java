@@ -48,6 +48,11 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.psl.fantasy.league.season2.R;;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -163,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
     LinearLayout passwordStrengthLayout;
     TextView password_strengthTxt;
     String password_strength_check = "Weak";
-
+    GoogleSignInClient mGoogleSignInClient;
     Pattern pattern;
     Account[] account;
     String[] StringArray;
@@ -232,7 +237,10 @@ public class RegisterActivity extends AppCompatActivity {
         btn_registeration_end = (Button) findViewById(R.id.btnRegister_new);
         txtFbLogin=findViewById(R.id.login_button);
         //callbackManager = CallbackManager.Factory.create();
-
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         et_enterpassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -457,29 +465,20 @@ public class RegisterActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        GoogleApiClient.OnConnectionFailedListener mOnConnectionFailedListener = new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-            }
-        };
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(RegisterActivity.this /* FragmentActivity */, mOnConnectionFailedListener /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+
+
 
         ImageView signInButton = (ImageView) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                    //Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                     startActivityForResult(signInIntent, RC_SIGN_IN);
+
                 }catch (Exception e)
                 {
                     e.printStackTrace();
@@ -824,7 +823,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //Toast.makeText(RegisterActivity.this, "Permission Granted", Toast.LENGTH_LONG).show();
                             getAccountId();
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(RegisterActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -871,12 +870,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
+    private void handleSignInResult(Task<GoogleSignInAccount> result) {
         //   Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         try {
-            if (result.isSuccess()) {
+            //if (result.isSuccessful()) {
                 // Signed in successfully, show authenticated UI.
-                final GoogleSignInAccount acct = result.getSignInAccount();
+                final GoogleSignInAccount acct = result.getResult(ApiException.class);
+
                 acct.getDisplayName();
                 register_via = "google";
                 if (acct.getDisplayName() != null && !acct.getDisplayName().equals("")) {
@@ -896,9 +896,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Config.getAlert(RegisterActivity.this, "Please enter mobile number to verify");
 
-            } else {
+            //}
+            /*else {
                 result.isSuccess();
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -908,8 +909,11 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            //handleSignInResult(task);
+            task.getResult().getGivenName();
+//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(task);
         }
         //callbackManager.onActivityResult(requestCode, resultCode, data);
         if (callbackManager != null)
@@ -1089,9 +1093,9 @@ public class RegisterActivity extends AppCompatActivity {
         String option = "";
         Context context;
 
-        //boolean IS_EDITED;
+            //boolean IS_EDITED;
         public ViewDialog(Context context) {
-            super(context);
+                super(context);
             this.context = context;
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }

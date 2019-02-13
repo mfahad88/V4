@@ -7,8 +7,8 @@ android {
         applicationId "com.psl.fantasy.league"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 37
-        versionName "1.9.8"
+        versionCode 38
+        versionName "1.9.9"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -66,6 +66,7 @@ dependencies {
     //compile 'com.paysyslabs:instascan:1.1.5-DG-0.2'
     //compile 'com.google.firebase:firebase-firestore:11.4.2'
     implementation 'com.paysyslabs:instascan:1.1.7.2-SNAPSHOT'
+//    implementation 'com.paysyslabs:instascan:1.1.7.2'
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'org.jsoup:jsoup:1.8.3'
    // compile 'com.paysyslabs:instascan:1.1.7.1'

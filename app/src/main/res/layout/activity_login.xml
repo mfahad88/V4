@@ -84,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_Pin"
             android:layout_marginRight="4dp"
+            android:layout_alignRight="@id/txt_MobileNumber"
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/btn_login" />
@@ -95,7 +96,7 @@
             android:layout_alignLeft="@id/txt_MobileNumber"
             android:layout_below="@id/txt_Pin"
             android:layout_marginLeft="4dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_register_" />
 
@@ -106,7 +107,7 @@
             android:layout_alignLeft="@id/btn_Registr"
             android:layout_below="@+id/btn_Login"
             android:layout_marginLeft="5dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="20dp"
             android:text="Forgot Password ?"
             android:textColor="@color/white" />

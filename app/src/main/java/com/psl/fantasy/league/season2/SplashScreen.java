@@ -98,8 +98,8 @@ public class SplashScreen extends Activity {
 
       // createNotification2("This is method body","Test Title");
 
-        audioPlayer= MediaPlayer.create(SplashScreen.this,R.raw.apni_audio);
-        audioPlayer.start();
+        /*audioPlayer= MediaPlayer.create(SplashScreen.this,R.raw.apni_audio);
+        audioPlayer.start();*/
         /*try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
