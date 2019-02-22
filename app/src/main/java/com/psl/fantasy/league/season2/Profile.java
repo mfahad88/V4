@@ -596,8 +596,9 @@ public class Profile extends Fragment {
 
                 SoapObject object = connection.Result();
                 mResult = object.toString();
-
+               // connection.insertUserLog(sharedPreferences.getString(Config.JS_Mobile_Number,""),"saveImage2","",mResult,"");
             } catch (Exception e) {
+
                 e.printStackTrace();
             }
             return null;

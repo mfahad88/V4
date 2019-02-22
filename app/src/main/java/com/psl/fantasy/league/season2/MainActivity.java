@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Environment;
 import android.os.Handler;
 import com.psl.fantasy.league.season2.R;;
@@ -101,10 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             R.drawable.drawer_shop,//Dashboard//7
             R.drawable.drawer_booster,//8
             R.drawable.drawer_wallet,//9
-            //R.drawable.drawer_history,//10
+//            R.drawable.drawer_history,//10
             R.drawable.drawer_about,//11
             R.drawable.drawer_prizes,//12
             R.drawable.drawer_contact_us,//12
+            R.drawable.drawer_gold_finance,
             R.drawable.drawer_logout // logout//13
 
     };
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     String[] mCount = new String[]{
             "", "", "", "", "",
-            "", "", "", "", "", "", ""};
+            "", "", "", "", "", "", "",""};
 
     ////////////////////////////
 
@@ -658,6 +660,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragment = new ContactUs();
                         break;
                     case 11:
+                        fragment = new GoldFinanceFragment();
+                        break;
+                    case 12:
                         getAlert("Are you sure you want to log out?");
                         if (iv_nc.getVisibility() == View.VISIBLE)
                             iv_nc.setVisibility(View.VISIBLE);

@@ -105,8 +105,9 @@ public class ContactUs extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                Connection connection = new Connection("send_email", getActivity());
 
+                Connection connection = new Connection("send_email", getActivity());
+//                mResult=connection.sendEmail(user_id,params[0],params[1],params[2],params[3]);
                 connection.addProperties("user_id", user_id);
                 connection.addProperties("name", params[0]);
                 connection.addProperties("email", params[1]);
@@ -118,7 +119,6 @@ public class ContactUs extends Fragment {
 
                 SoapObject object = connection.Result();
                 mResult = object.toString();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

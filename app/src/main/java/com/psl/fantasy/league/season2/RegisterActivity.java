@@ -52,7 +52,13 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.psl.fantasy.league.season2.R;;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -99,7 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
     String f_name = "";
     String l_name = "";
     CountDownTimer countDownTimer;
-
+    private FirebaseAuth mAuth;
+    GoogleApiClient mGoogleApiClient;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -115,8 +122,8 @@ public class RegisterActivity extends AppCompatActivity {
     LoginButton loginButton;
     EditText userName, userPwd;
     Button loginBtn;
-    GoogleApiClient mGoogleApiClient;
-    int RC_SIGN_IN = 0;
+
+    int RC_SIGN_IN = 23;
 
     private CallbackManager mFacebookCallbackManager;
     private LoginManager mLoginManager;
@@ -169,6 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView password_strengthTxt;
     String password_strength_check = "Weak";
     GoogleSignInClient mGoogleSignInClient;
+
     Pattern pattern;
     Account[] account;
     String[] StringArray;
@@ -237,10 +245,11 @@ public class RegisterActivity extends AppCompatActivity {
         btn_registeration_end = (Button) findViewById(R.id.btnRegister_new);
         txtFbLogin=findViewById(R.id.login_button);
         //callbackManager = CallbackManager.Factory.create();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+
+//        mAuth = FirebaseAuth.getInstance();
+
         et_enterpassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -467,18 +476,29 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        GoogleApiClient.OnConnectionFailedListener mOnConnectionFailedListener = new GoogleApiClient.OnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+            }
+        };
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(RegisterActivity.this /* FragmentActivity */, mOnConnectionFailedListener /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
         ImageView signInButton = (ImageView) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    //Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                     startActivityForResult(signInIntent, RC_SIGN_IN);
-
                 }catch (Exception e)
                 {
                     e.printStackTrace();
@@ -870,13 +890,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> result) {
+    private void handleSignInResult(GoogleSignInResult result) {
         //   Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         try {
-            //if (result.isSuccessful()) {
+            if (result.isSuccess()) {
                 // Signed in successfully, show authenticated UI.
-                final GoogleSignInAccount acct = result.getResult(ApiException.class);
-
+                final GoogleSignInAccount acct = result.getSignInAccount();
                 acct.getDisplayName();
                 register_via = "google";
                 if (acct.getDisplayName() != null && !acct.getDisplayName().equals("")) {
@@ -896,10 +915,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Config.getAlert(RegisterActivity.this, "Please enter mobile number to verify");
 
-            //}
-            /*else {
+            } else {
                 result.isSuccess();
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -909,15 +927,19 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+           // Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             //handleSignInResult(task);
-            task.getResult().getGivenName();
-//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(task);
+            try {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                handleSignInResult(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        //callbackManager.onActivityResult(requestCode, resultCode, data);
-        if (callbackManager != null)
+        if (callbackManager != null) {
             callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void setupInit() {

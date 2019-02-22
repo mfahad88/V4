@@ -10,9 +10,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,19 +26,22 @@ import com.psl.classes.JSUtils;
 import com.psl.transport.Connection;
 import com.psl.fantasy.league.season2.R;;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class JSPurchaseItem extends Fragment {
 
     String strItemName, strOTP, strMobNmbr, strAuthHeader, strAmount, strCharges, userID;
-    TextView txtItemName, txtItemPrice, txtTxn;
+    TextView txtItemName, txtItemPrice, txtTxn,txtMobileNumber;
     Button btnNext, btnPay;
     int itemResId;
     ImageView imgItem;
     SharedPreferences sharedPreferences;
     ArrayList<InventoryClass> dealItems;
-
+    Spinner spinnerWallet;
+    EditText edtMobileNumber;
+    int wallet_index=0;
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -47,6 +54,7 @@ public class JSPurchaseItem extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(Config.SHARED_PREF, MODE_PRIVATE);
         strMobNmbr = sharedPreferences.getString(Config.JS_Mobile_Number, "");
         userID = sharedPreferences.getString(Config.USER_ID, "");
+
         Config.PopulateHeader(getActivity(), view.findViewById(R.id.helmet_layout));
 
         strAmount = getArguments().getString(Config.JS_Item_Purchase_Price);
@@ -66,21 +74,50 @@ public class JSPurchaseItem extends Fragment {
         btnPay = (Button) view.findViewById(R.id.btnPay);
         btnPay.setVisibility(View.GONE);
         imgItem = (ImageView) view.findViewById(R.id.imgItem);
+        edtMobileNumber=view.findViewById(R.id.edtMobileNumber);
+        spinnerWallet=view.findViewById(R.id.wallet_type);
+        List<String> list=new ArrayList<>();
+        list.add("JS Wallet");
+        list.add("Easy Paisa Wallet");
 
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, list);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerWallet.setAdapter(dataAdapter);
         //  txtItemName.setText(strItemName);
+        edtMobileNumber.setText(strMobNmbr);
         txtItemPrice.setText("PKR " + strAmount);
         imgItem.setImageResource(itemResId);
+        spinnerWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                wallet_index=position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(wallet_index==0) {
+                    new MyAyncTaskPaymentINQ().execute();
+                }else{
 
-                new MyAyncTaskPaymentINQ().execute();
+                }
             }
         });
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MyAyncTaskPayBill().execute();
+                if(wallet_index==0) {
+                    new MyAyncTaskPayBill().execute();
+                }
             }
         });
         return view;

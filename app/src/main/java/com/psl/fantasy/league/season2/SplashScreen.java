@@ -16,6 +16,7 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -49,8 +50,11 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -100,22 +104,23 @@ public class SplashScreen extends Activity {
 
         /*audioPlayer= MediaPlayer.create(SplashScreen.this,R.raw.apni_audio);
         audioPlayer.start();*/
-        /*try {
+       /* try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
                 String hashKey = new String(Base64.encode(md.digest(), 0));
                 Log.i(this.getClass().getName(), "printHashKey() Hash Key: " + hashKey);
+                Toast.makeText(this, hashKey, Toast.LENGTH_LONG).show();
             }
         } catch (NoSuchAlgorithmException e) {
             Log.e(this.getClass().getName(), "printHashKey()", e);
         } catch (Exception e) {
             Log.e(this.getClass().getName(), "printHashKey()", e);
-        }
-*/
+        }*/
         try {
             //lx1();
+
 
             callAccessories();
 

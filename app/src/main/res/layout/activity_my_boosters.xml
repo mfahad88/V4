@@ -126,7 +126,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="30dp"
                             android:gravity="left"
-                            android:text="Normal Booster will be awarded on Mobile Topup, QR Scan and Bill payment transactions whereas Super Booster will be awarded on maintaining minimum 2000 balance for a day"
+                            android:text="Normal Booster will be awarded on Mobile Topup and Bill payment transactions whereas Super Booster will be awarded on maintaining minimum 2000 balance for a day"
                             android:textAlignment="textStart"
                             android:textColor="@color/lv_fix_row_title_color"
                             android:textSize="12sp" />

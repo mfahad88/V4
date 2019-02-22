@@ -115,6 +115,21 @@ public class Transaction_Details  {
         this.request = request;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Transaction_Details{" +
+                "deal_of_the_day='" + deal_of_the_day + '\'' +
+                ", id='" + id + '\'' +
+                ", bill_type='" + bill_type + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", jswallet='" + jswallet + '\'' +
+                ", response='" + response + '\'' +
+                ", amount='" + amount + '\'' +
+                ", type='" + type + '\'' +
+                ", transaction_id='" + transaction_id + '\'' +
+                ", description='" + description + '\'' +
+                ", request='" + request + '\'' +
+                '}';
+    }
 }
