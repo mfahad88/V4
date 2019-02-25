@@ -442,7 +442,7 @@ public class JSPurchaseItem extends Fragment {
                 {
                     strAuthHeader = res;
                     //res = conn.JSPurchaseItemINQ(strAuthHeader, strMobNmbr, strAmount);
-                    res = conn.EPPurchaseItemINQ(list_url.get(0),strAuthHeader,"6743" + sdf.format(date), edtMobileNumber.getText().toString(), Config.JS_Mobile_Number, edtEmail.getText().toString());
+                    res = conn.EPPurchaseItemINQ(list_url.get(1),strAuthHeader,"6743" + sdf.format(date),strAmount ,edtMobileNumber.getText().toString(), edtEmail.getText().toString());
 
                 }
             }

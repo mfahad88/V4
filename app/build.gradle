@@ -7,8 +7,8 @@ android {
         applicationId "com.psl.fantasy.league"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 40
-        versionName "1.9.9"
+        versionCode 41
+        versionName "2.0.0"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

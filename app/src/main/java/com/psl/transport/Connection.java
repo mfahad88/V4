@@ -797,7 +797,7 @@ public class Connection {
 	public String EPPurchaseItemINQ(String api_url,String authHead,String OrderId,String transactionAmount,String mobileAccountNo,String email)
 	{
 		//String Id="6473";
-		String strJSONBody="{\"OrderId\":\"" + OrderId + "\"," +
+		String strJSONBody="{\"orderId\":\"" + OrderId + "\"," +
 				"\"transactionAmount\":\"" + transactionAmount+"\"," +
 				"\"mobileAccountNo\":\"" + mobileAccountNo+"\"," +
 				"\"email\":\"" + email +
@@ -1750,7 +1750,7 @@ int retry=0;
 	public void ConnectForSingleNode(){
 		try {
 			envelop.setOutputSoapObject(object);
-			mobile_no=envelop.bodyOut.toString().substring(envelop.bodyOut.toString().lastIndexOf("mobile")+7,envelop.bodyOut.toString().lastIndexOf("mobile")+18);
+			//mobile_no=envelop.bodyOut.toString().substring(envelop.bodyOut.toString().lastIndexOf("mobile")+7,envelop.bodyOut.toString().lastIndexOf("mobile")+18);
 			if(URL.startsWith("https"))
 			{
 				HttpsTransporSE androidHttpTransport = new HttpsTransporSE(URL, 0, "", 30000);
