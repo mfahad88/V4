@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
@@ -27,6 +28,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 	public static final String TABLE_FIXTURES = "tbl_fixtures";
 	public static final String TABLE_JS_LOCATIONS= "tbl_js_locations";
 	public static final String TABLE_JS_Boosters= "tbl_js_boosters";
+	public static final String TABLE_LeaderBoard_Daily= "tbl_leaderboard_daily";
+	public static final String TABLE_LeaderBoard_overall= "tbl_leaderboard_overall";
 	public static final String TABLE_Transaction_Details= "TABLE_Transaction_Details";
 
 
@@ -87,6 +90,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String P_POINTS = "p_points";
     private static final String TOTAL_P_pOINTS = "total_points";
     private static final String user_id = "user_id";
+
+	private static final String USERNAME="username";
+	private static final String POSITION="position";
+	private static final String POINTS="points";
+	private static final String MODIFIEDDATE="modified_date";
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
     SimpleDateFormat dateFormater = new SimpleDateFormat("MM-dd-yyyy");
@@ -209,6 +217,23 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             + CATEGORY + " TEXT,"
             + LONGITUDE + " TEXT " + ")";
 
+    private static final String CREATE_TABLE_LeaderBoard_Daily = "CREATE TABLE "
+			+TABLE_LeaderBoard_Daily+" ( "
+			+ID +" TEXT,"
+			+USERNAME+ " TEXT,"
+			+POSITION+ " TEXT,"
+			+POINTS+" TEXT,"
+			+MODIFIEDDATE+"datetime default current_timestamp"+ ")";
+
+	private static final String CREATE_TABLE_LeaderBoard_Overall = "CREATE TABLE "
+			+TABLE_LeaderBoard_overall+" ( "
+			+ID +" TEXT,"
+			+USERNAME+ " TEXT,"
+			+POSITION+ " TEXT,"
+			+POINTS+" TEXT,"
+			+MODIFIEDDATE+"datetime default current_timestamp"+ ")";
+
+
 	//////////////////////////////////////For Transactions///////////////////////////
 	static String deal_of_the_day   ="deal_of_the_day"    ;
 	static String TR_ID             ="TR_ID"    ;
@@ -242,7 +267,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
 	private static final String CREATE_TABLE_FIXTURES = "CREATE TABLE "
 			+ TABLE_FIXTURES+" ( "
-			+ ID + " INTEGER PRIMARY KEY,"
+			+ ID + " INTEGER PRIMARY KEY, "
 			+ MATCH + " TEXT,"
 			+ MATCH_DATE + " TEXT,"
 			+ VENUE + " TEXT,"
@@ -257,8 +282,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 		db.execSQL(CREATE_TABLE_JS_BOOSTERS);
             db.execSQL(CREATE_TABLE_HISTORY_PLAYERS);
             db.execSQL(CREATE_TABLE_TRANSACTION_LIST);
-
-
+		db.execSQL(CREATE_TABLE_LeaderBoard_Daily);
 	}
 
 	@Override
@@ -269,7 +293,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_FIXTURES);
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY_PLAYERS);
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_JS_Boosters);
-
+				db.execSQL("DROP TABLE IF EXISTS "+ TABLE_LeaderBoard_overall);
+				db.execSQL("DROP TABLE IF EXISTS "+ TABLE_LeaderBoard_Daily);
 			onCreate(db);
 				// create new tables
 		//onCreate(db);
@@ -329,6 +354,27 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 		}
 
 	}
+
+	public void deleteLeaderBoardDaily(){
+		try{
+			SQLiteDatabase db=this.getWritableDatabase();
+			db.execSQL("Delete from "+TABLE_LeaderBoard_Daily);
+			db.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteLeaderBoardOverall(){
+		try{
+			SQLiteDatabase db=this.getWritableDatabase();
+			db.execSQL("Delete from "+TABLE_LeaderBoard_overall);
+			db.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
 	public List<BoosterVO> getBooster(){
 		List<BoosterVO> playerList = new ArrayList<BoosterVO>();
 		Cursor c = null ;
@@ -366,7 +412,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 		long processId = 0  ;
 		SQLiteDatabase database = null;
 		try {
-
 			database = this.getWritableDatabase();
 			for (int i = 0; i < data.size(); i++) {
 
@@ -420,6 +465,63 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 				}
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(database!=null)
+				if(database.isOpen())
+					database.close();
+		}
+		return processId ;
+	}
+
+	public long saveLeaderBoardDaily(List<LeaderboarPositionVO> list){
+		long processId = 0  ;
+		deleteLeaderBoardDaily();
+		SQLiteDatabase database = null;
+		try {
+
+			database = this.getWritableDatabase();
+			for(int i=0;i<list.size();i++){
+				if(list!=null){
+					ContentValues cv=new ContentValues();
+					cv.put(ID,list.get(i).getId());
+					cv.put(USERNAME,list.get(i).getUsername());
+					cv.put(POSITION,list.get(i).getPosition());
+					cv.put(POINTS,list.get(i).getPoints());
+					processId = database.insert(TABLE_LeaderBoard_Daily,null,cv);
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(database!=null)
+				if(database.isOpen())
+					database.close();
+		}
+		return processId ;
+	}
+
+	public long saveLeaderBoardOverall(List<LeaderboarPositionVO> list){
+		long processId = 0  ;
+		deleteLeaderBoardOverall();
+		SQLiteDatabase database = null;
+		try {
+			database = this.getWritableDatabase();
+			for(int i=0;i<list.size();i++){
+				if(list!=null){
+					ContentValues cv=new ContentValues();
+					cv.put(ID,list.get(i).getId());
+					cv.put(USERNAME,list.get(i).getUsername());
+					cv.put(POSITION,list.get(i).getPosition());
+					cv.put(POINTS,list.get(i).getPoints());
+					processId = database.insert(TABLE_LeaderBoard_overall,null,cv);
+				}
+			}
+		}catch (Exception e){
 			e.printStackTrace();
 		}
 		finally
@@ -518,6 +620,76 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 			deleteTransactionAll();
 		return playerList;
 	}
+
+
+	public List<LeaderBoardPosition> getLeaderBoardDaily(){
+		List<LeaderBoardPosition> list = new ArrayList<>();
+		Cursor c = null ;
+		try {
+
+			String query = "SELECT * FROM " + TABLE_LeaderBoard_Daily;
+
+			SQLiteDatabase db = this.getReadableDatabase();
+			c = db.rawQuery(query, null);
+
+			if (c.moveToFirst()) {
+				do {
+					LeaderBoardPosition vo=new LeaderBoardPosition();
+					vo.setId(c.getString(c.getColumnIndex(ID)));
+					vo.setId(c.getString(c.getColumnIndex(MODIFIEDDATE)));
+					vo.setUsername(c.getString(c.getColumnIndex(USERNAME)));
+					vo.setPosition(c.getString(c.getColumnIndex(POSITION)));
+					vo.setPoints(c.getString(c.getColumnIndex(POINTS)));
+
+					list.add(vo);
+				} while (c.moveToNext());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			if(c!=null)
+				c.close();
+
+		}
+		return list;
+	}
+
+	public List<LeaderBoardPosition> getLeaderBoardOverall(){
+		List<LeaderBoardPosition> list = new ArrayList<>();
+		Cursor c = null ;
+		try {
+
+			String query = "SELECT * FROM " + TABLE_LeaderBoard_overall;
+
+			SQLiteDatabase db = this.getReadableDatabase();
+			c = db.rawQuery(query, null);
+
+			if (c.moveToFirst()) {
+				do {
+					LeaderBoardPosition vo=new LeaderBoardPosition();
+					vo.setId(c.getString(c.getColumnIndex(ID)));
+					vo.setDate(new Date(c.getString(c.getColumnIndex(MODIFIEDDATE))));
+					vo.setUsername(c.getString(c.getColumnIndex(USERNAME)));
+					vo.setPosition(c.getString(c.getColumnIndex(POSITION)));
+					vo.setPoints(c.getString(c.getColumnIndex(POINTS)));
+
+					list.add(vo);
+				} while (c.moveToNext());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			if(c!=null)
+				c.close();
+
+		}
+		return list;
+	}
+
 	public long saveSelectedPlayers(List<PlayerProfileVO> player){
 		long processId = 0  ;
 		SQLiteDatabase database = null;
@@ -663,6 +835,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         }
         return processId;
     }
+
+
 
     public List<PlayerProfileVO> getSelectedMatchHistory(String match_id, String userid) {
         List<PlayerProfileVO> playerList = new ArrayList<PlayerProfileVO>();

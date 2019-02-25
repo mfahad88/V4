@@ -43,6 +43,7 @@ import com.psl.classes.Config;
 import com.psl.classes.DatabaseHandler;
 import com.psl.classes.FixturesAdapter;
 import com.psl.classes.FixturesVO;
+import com.psl.classes.LeaderBoardPosition;
 import com.psl.classes.LeaderboarPositionVO;
 import com.psl.classes.PlayerProfileVO;
 import com.psl.classes.XMLParser;
@@ -56,6 +57,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -228,8 +230,8 @@ public class Dashboard extends Fragment {
             iv_profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                     final RadioButton rb = (RadioButton) getActivity().findViewById(R.id.iv_fake);
-                     rb.setChecked(true);
+                    final RadioButton rb = (RadioButton) getActivity().findViewById(R.id.iv_fake);
+                    rb.setChecked(true);
                     Fragment fragment = new Profile();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -299,7 +301,7 @@ public class Dashboard extends Fragment {
                 if (player_list_size == 0) {
                     new GetUserFantasyTeam().execute();
                 }
-                 else {
+                else {
                     List<PlayerProfileVO> list = dbHandler.getSelectedPlayers();
                     if (list != null) {
                         for (int i = 0; i < list.size(); i++) {
@@ -644,6 +646,12 @@ public class Dashboard extends Fragment {
         }
     }
 
+    public Date addHoursToJavaUtilDate(Date date, int hours) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, hours);
+        return calendar.getTime();
+    }
 
     long datesDifference(String check) {
         long minutes_difference = 0;
@@ -727,7 +735,7 @@ public class Dashboard extends Fragment {
     }
 
     public void startCountDown(View view) {
-    /*    creating object for all text views    */
+        /*    creating object for all text views    */
 
         //final TextView days = (TextView)view.findViewById(R.id.days);
         //final TextView hours = (TextView)view.findViewById(R.id.hours);
@@ -764,7 +772,7 @@ public class Dashboard extends Fragment {
                 tv_countdownTimer.setText(str_display);
 
                 //tv_countdownTimer.setText("In " + days + " Days " + hours + " Hours " + minutes + " Minutes " + secs + " Seconds");
-            /*            converting the milliseconds into days, hours, minutes and seconds and displaying it in textviews             */
+                /*            converting the milliseconds into days, hours, minutes and seconds and displaying it in textviews             */
                 //days.setText(TimeUnit.HOURS.toDays(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))+"");
                 //hours.setText((TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished)))+"");
                 //mins.setText((TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)))+"");
@@ -774,8 +782,8 @@ public class Dashboard extends Fragment {
             @Override
 
             public void onFinish() {
-            /*            clearing all fields and displaying countdown finished message
-                     *  */
+                /*            clearing all fields and displaying countdown finished message
+                 *  */
                 try {
                     //Toast.makeText(getActivity(), "Match started, have an entertaining match !!!", Toast.LENGTH_LONG).show();
 
@@ -892,6 +900,7 @@ public class Dashboard extends Fragment {
         ProgressDialog pDialog;
         String mResult;
         List<LeaderboarPositionVO> leaderData;
+        List<LeaderBoardPosition> list;
         String set_or_not = "";
 
         @Override
@@ -916,6 +925,55 @@ public class Dashboard extends Fragment {
                     xmp.parse(mResult);
                     leaderData = xmp.getLeaderboardPoistionData();
                 }
+
+                /*if(dbHandler.getLeaderBoardDaily().size()>0){
+                    boolean is_modified=dbHandler.getLeaderBoardDaily().get(0).getDate().after(addHoursToJavaUtilDate(dbHandler.getLeaderBoardDaily().get(0).getDate(),4));
+                    if(is_modified) {
+
+                        Connection connection = new Connection(getActivity());
+                        mResult = connection.getLeaderboardPositions(params[0], params[1]);
+                        set_or_not = params[0];
+                        leaderData = new ArrayList<LeaderboarPositionVO>();
+                        if (mResult != null && !mResult.equals("")) {
+                            XMLParser xmp = new XMLParser();
+                            xmp.parse(mResult);
+                            leaderData = xmp.getLeaderboardPoistionData();
+                            if(set_or_not.equalsIgnoreCase("today")){
+                                dbHandler.saveLeaderBoardDaily(leaderData);
+                            }else {
+                                dbHandler.saveLeaderBoardOverall(leaderData);
+                            }
+
+                        }
+                    }else{
+                        if (set_or_not.equalsIgnoreCase("today")) {
+                            list= dbHandler.getLeaderBoardDaily();
+                        } else {
+                            list= dbHandler.getLeaderBoardOverall();
+                        }
+                    }
+                }else{
+                    Connection connection = new Connection(getActivity());
+                    mResult = connection.getLeaderboardPositions(params[0], params[1]);
+                    set_or_not = params[0];
+                    leaderData = new ArrayList<LeaderboarPositionVO>();
+                    if (mResult != null && !mResult.equals("")) {
+                        XMLParser xmp = new XMLParser();
+                        xmp.parse(mResult);
+                        leaderData = xmp.getLeaderboardPoistionData();
+                        if(set_or_not.equalsIgnoreCase("today")){
+                            dbHandler.saveLeaderBoardDaily(leaderData);
+                        }else {
+                            dbHandler.saveLeaderBoardOverall(leaderData);
+                        }
+
+                    }
+                    if (set_or_not.equalsIgnoreCase("today")) {
+                        list= dbHandler.getLeaderBoardDaily();
+                    } else {
+                        list= dbHandler.getLeaderBoardOverall();
+                    }
+                }*/
 
             } catch (Exception e) {
                 e.printStackTrace();

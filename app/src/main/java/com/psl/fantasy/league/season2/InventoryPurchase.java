@@ -149,7 +149,7 @@ public class InventoryPurchase extends Fragment {
             try {
                 Connection connection = new Connection(getActivity());
                 res = connection.getAllItems();
-            }
+        }
             catch (Exception e)
             {
 

@@ -591,7 +591,7 @@ public class Config {
     public static  String w3 = "YuvttXDI9TCbEbrKztBfAKv0MYYX89Bn";
     public static  String w4 = "HNQrkcsrd4OnbeU6";
     //public static  String w0 = "http://"+getWS()+"/";
-//    public static  String w0 = "http://104.41.140.154/PSL/";
+//    public static  String w0 = "https://apnicricketleague.eastus.cloudapp.azure.com/PSL/";
     public static String w0 = "http://172.28.28.78:82/";
     public static String w1 = "CJy1//PsvDYeMNZ/UTERPg==";
     public static String w2 = "12U/jYHQ4WkeMNZ/UTERPg==";

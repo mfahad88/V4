@@ -1201,4 +1201,74 @@ public class XMLParser {
         }
         return playerList;
     }
+
+    public List<String> getMyPartners() {
+        String result = "";
+        List<String> playerList = new ArrayList<>();
+        try {
+            doc.getDocumentElement().normalize();
+            NodeList nList = null;
+            System.out.println("Root element :"
+                    + doc.getDocumentElement().getNodeName());
+
+            nList = doc.getElementsByTagName("integration_partner");
+            int length=nList.getLength();
+
+            for (int i = 0 ; i < length; i++) {
+                Node nNode = nList.item(i);
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Element eElement = (Element) nNode;
+                    try {
+                       playerList.add(eElement.getElementsByTagName("STR_DISPLAY_NAME").item(0).getTextContent());
+                    } catch (Exception e) {
+                    }
+                    /*try {
+                        result = eElement.getElementsByTagName("STR_URL").item(0).getTextContent();
+                        mPlayer.setID_INTEGRATION_VALUE(result);
+                    } catch (Exception e) {
+                    }*/
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return playerList;
+    }
+
+    public List<String> getMyPartnersUrl() {
+        String result = "";
+        List<String> playerList = new ArrayList<>();
+        try {
+            doc.getDocumentElement().normalize();
+            NodeList nList = null;
+            System.out.println("Root element :"
+                    + doc.getDocumentElement().getNodeName());
+
+            nList = doc.getElementsByTagName("integration_partner");
+            int length=nList.getLength();
+
+            for (int i = 0 ; i < length; i++) {
+                Node nNode = nList.item(i);
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Element eElement = (Element) nNode;
+                    try {
+                        playerList.add(eElement.getElementsByTagName("STR_URL").item(0).getTextContent());
+                    } catch (Exception e) {
+                    }
+                    /*try {
+                        result = eElement.getElementsByTagName("STR_URL").item(0).getTextContent();
+                        mPlayer.setID_INTEGRATION_VALUE(result);
+                    } catch (Exception e) {
+                    }*/
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return playerList;
+    }
 }

@@ -398,6 +398,7 @@ public class Connection {
 
 		}
 	}
+
 	public String JSMiniStatement(String authHead,String mobNumber,String otp)
 	{
 		String strJSONBody=	"{\"OtpPin\":\"" + otp + "\"," +
@@ -792,6 +793,53 @@ public class Connection {
 
 		}
 	}
+
+	public String EPPurchaseItemINQ(String api_url,String authHead,String OrderId,String transactionAmount,String mobileAccountNo,String email)
+	{
+		//String Id="6473";
+		String strJSONBody="{\"OrderId\":\"" + OrderId + "\"," +
+				"\"transactionAmount\":\"" + transactionAmount+"\"," +
+				"\"mobileAccountNo\":\"" + mobileAccountNo+"\"," +
+				"\"email\":\"" + email +
+				"\"}";
+		HashMap<String, String> params=new HashMap<>();
+		MediaType mediaType = MediaType.parse("application/json");
+		RequestBody body = RequestBody.create(mediaType,
+				strJSONBody);
+		try {
+			java.net.URL url = new URI(api_url).toURL();
+
+
+			String res=getResultHTTP(authHead,url,body);
+			insertUserLog(mobile_no,"ep payment",strJSONBody,res,"");
+
+			JSONObject jsonObj=new JSONObject(res);
+			if(!jsonObj.isNull("responseCode"))
+			{
+				if(jsonObj.getString("responseCode").equalsIgnoreCase("0000")) {
+					res = "OrderId : "+jsonObj.getString("orderId");
+					res +=" TransactionId : "+jsonObj.getString("transactionId");
+					res += (String) jsonObj.get("responseDesc");
+					return res;
+				}else{
+					res=(String) jsonObj.get("responseDesc");
+					return res;
+				}
+			}
+
+			return res;
+
+		}
+
+		catch(Exception e)
+		{
+			insertUserLog(mobile_no,"ep payment",strJSONBody,res,e.getMessage());
+			return "-1An error occured. Please try again";
+
+		}
+	}
+
+
 	public String JSPurchaseItemPayment(String authHead,String mobNumber,String amount,String otp,String charges,String itemName)
 	{
 		String strJSONBody=	"{\"MobileNumber\":\"" + mobNumber + "\"," +
@@ -1031,7 +1079,71 @@ public class Connection {
 		return  res;
 	}
 
+	public String getIntegrationPartner(){
+		String result="";
 
+		String MethodName = "get_Partner";
+		SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
+
+		soapRequest.addProperty("w_username", Config.w1);
+		soapRequest.addProperty("w_password", Config.w2);
+		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+
+		result=getResult(soapRequest,MethodName);
+		//insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
+		return result;
+	}
+	String getResultHTTP1(String authHead,java.net.URL url,RequestBody requestBody) {
+		try {
+			OkHttpClient client = new OkHttpClient.Builder()
+					.connectTimeout(3, TimeUnit.MINUTES)
+					.writeTimeout(3, TimeUnit.MINUTES)
+					.readTimeout(3, TimeUnit.MINUTES)
+					.build();
+			MediaType mediaType = MediaType.parse("application/json");
+
+
+			Request request = new Request.Builder()
+					.url(url)
+					.post(requestBody)
+					.addHeader("Credential", authHead)
+					.addHeader("content-type", "application/json")
+
+					.build();
+
+			Response response = client.newCall(request).execute();
+			//Log.i(TAG,"Response---->"+response.body().string());
+			res=response.body().string();
+
+		}
+		catch (Exception e)
+		{
+
+			e.printStackTrace();
+
+			if(e.getClass().equals(new ConnectException().getClass()))
+			{
+				res="-1Please check your internet connection and try again.";
+			}
+			else if(e.getClass().equals(new SocketTimeoutException().getClass()))
+			{/*
+				retry++;
+				if(retry<=3)
+				{
+					return getResultHTTP( authHead,url,requestBody);
+				}
+				else
+				{
+					retry=0;*/
+				res="-1Request timeout. Please try again.";
+				//}
+			}
+
+			else
+				res="-1An error occured. Please try again";
+		}
+		return  res;
+	}
 
 	/*public String UpdateTransaction(String transaction_id,String amount,String tr_type,String jswallet,
 									String request,String response,String description,String bill_type)
@@ -1393,7 +1505,7 @@ int retry=0;
 		return result;
 	}
 
-	/*public String sendEmail(String user_id,String name,String email,String mobile,String question) {
+	public String sendEmail(String user_id,String name,String email,String mobile,String question) {
 		String result="";
 		String MethodName = "send_email";
 		SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
@@ -1409,7 +1521,7 @@ int retry=0;
 		result=getResult(soapRequest,MethodName);
 		insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
 		return result;
-	}*/
+	}
 
 
 	public String getLeaderboardPositions(String date, String user_id) {
@@ -1644,7 +1756,6 @@ int retry=0;
 				HttpsTransporSE androidHttpTransport = new HttpsTransporSE(URL, 0, "", 30000);
 				androidHttpTransport.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 				androidHttpTransport.debug=true;
-
 				androidHttpTransport.call( Soap_Action, envelop);
 
 			}
@@ -1658,16 +1769,7 @@ int retry=0;
 
 
 			}
-
-			try {
-				result=(SoapObject)envelop.bodyIn;
-
-				//result=(SoapObject)result.getProperty(0);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				//insertUserLog(mobile_no,Soap_Action,((SoapObject)envelop.bodyOut).toString(),"",e.getMessage());
-			}
+			result=(SoapObject)envelop.bodyIn;
 			//insertUserLog(mobile_no,Soap_Action,((SoapObject)envelop.bodyOut).toString(),result.toString(),"");
 		}
 		catch (Exception e) {
@@ -1814,6 +1916,7 @@ int retry=0;
 	public String insertUserLog(String contact_no,String method_name,String request,String response,String exception){
 		String result="";
 		String MethodName="user_log";
+
 		SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
 		soapRequest.addProperty("w_username", Config.w1);
 		soapRequest.addProperty("w_password", Config.w2);
