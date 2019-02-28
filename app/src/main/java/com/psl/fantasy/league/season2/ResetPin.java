@@ -61,7 +61,7 @@ public class ResetPin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pin);
-        checkAndRequestPermissions();
+        //checkAndRequestPermissions();
         et_mobilenumber = (EditText) findViewById(R.id.txt_reset_mobile_no);
         et_mobilenumber_new = (EditText) findViewById(R.id.txt_mobileNumber_new_);
         et_otp = (EditText) findViewById(R.id.txt_otp);
@@ -414,7 +414,7 @@ public class ResetPin extends AppCompatActivity {
     }
 
 
-    private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
+    /*private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equalsIgnoreCase("otp")) {
@@ -423,17 +423,17 @@ public class ResetPin extends AppCompatActivity {
                 et_otp.setText(extractOTP(message));
             }
         }
-    };
+    };*/
 
     @Override
     public void onResume() {
         super.onResume();
-        LocalBroadcastManager.getInstance(this).
-                registerReceiver(smsReceiver, new IntentFilter("otp"));
+       /* LocalBroadcastManager.getInstance(this).
+                registerReceiver(smsReceiver, new IntentFilter("otp"));*/
 
     }
 
-    private boolean checkAndRequestPermissions() {
+   /* private boolean checkAndRequestPermissions() {
         try {
             int receiveSMS = ContextCompat.checkSelfPermission(this,
                     android.Manifest.permission.RECEIVE_SMS);
@@ -459,5 +459,5 @@ public class ResetPin extends AppCompatActivity {
             e.printStackTrace();
         }
         return true;
-    }
+    }*/
 }

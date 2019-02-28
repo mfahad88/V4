@@ -325,7 +325,7 @@ void waitForOTP()
                 registerReceiver(smsReceiver, new IntentFilter("otp"));*/
 
     }
-    private  boolean checkAndRequestPermissions() {
+   /* private  boolean checkAndRequestPermissions() {
 
         int receiveSMS = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.RECEIVE_SMS);
@@ -348,7 +348,7 @@ void waitForOTP()
             return false;
         }
         return true;
-    }
+    }*/
 
     void showAlert(String message)
     {

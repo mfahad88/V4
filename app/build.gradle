@@ -28,7 +28,71 @@ android {
         }
     }*/
     buildTypes {
+        def w0_uat = '"' + w0_uat + '"' ?: '"Define w0_uat"';
+        def w0_prod = '"' + w0_prod + '"' ?: '"Define w0_prod"';
+        def w1 = '"' + w1 + '"' ?: '"Define w1"';
+        def w2 = '"' + w2 + '"' ?: '"Define w2"';
+        def w3 = '"' + w3 + '"' ?: '"Define w3"';
+        def w4 = '"' + w4 + '"' ?: '"Define w4"';
+        def w5 = '"' + w5 + '"' ?: '"Define w5"';
+        def AUTH = '"' + AUTH + '"' ?: '"Define AUTH"';
+        def VERIFY = '"' + VERIFY + '"' ?: '"Define VERIFY"';
+        def INQUIRY = '"' + INQUIRY + '"' ?: '"Define INQUIRY"';
+        def MINISTATEMENT = '"' + MINISTATEMENT + '"' ?: '"Define MINISTATEMENT"';
+        def OTP_GENERATE = '"' + OTP_GENERATE + '"' ?: '"Define OTP_GENERATE"';
+        def OTP_VERIFY = '"' + OTP_VERIFY + '"' ?: '"Define OTP_VERIFY"';
+        def BILL_INQUIRY = '"' + BILL_INQUIRY + '"' ?: '"Define BILL_INQUIRY"';
+        def BILL_PAYMENT = '"' + BILL_PAYMENT + '"' ?: '"Define BILL_PAYMENT"';
+        def TOPUP_INQUIRY = '"' + TOPUP_INQUIRY + '"' ?: '"Define TOPUP_INQUIRY"';
+        def PAYMENT_INQUIRY = '"' + PAYMENT_INQUIRY + '"' ?: '"Define PAYMENT_INQUIRY"';
+        def OPEN_ACCOUNT = '"' + OPEN_ACCOUNT + '"' ?: '"Define OPEN_ACCOUNT"';
+        def PAYMENT_PURCHASE = '"' + PAYMENT_PURCHASE + '"' ?: '"Define PAYMENT_PURCHASE"';
+        def TOPUP_PAYMENT = '"' + TOPUP_PAYMENT + '"' ?: '"Define TOPUP_PAYMENT"';
+
+
+        debug{
+            buildConfigField 'String', 'w0', w0_uat
+            buildConfigField 'String', 'w1', w1
+            buildConfigField 'String', 'w2', w2
+            buildConfigField 'String', 'w3', w3
+            buildConfigField 'String', 'w4', w4
+            buildConfigField 'String', 'w5', w5
+            buildConfigField 'String', 'AUTH', AUTH
+            buildConfigField 'String', 'VERIFY', VERIFY
+            buildConfigField 'String', 'INQUIRY', INQUIRY
+            buildConfigField 'String', 'MINISTATEMENT', MINISTATEMENT
+            buildConfigField 'String', 'OTP_GENERATE', OTP_GENERATE
+            buildConfigField 'String', 'OTP_VERIFY', OTP_VERIFY
+            buildConfigField 'String', 'BILL_INQUIRY', BILL_INQUIRY
+            buildConfigField 'String', 'BILL_PAYMENT', BILL_PAYMENT
+            buildConfigField 'String', 'TOPUP_INQUIRY', TOPUP_INQUIRY
+            buildConfigField 'String', 'PAYMENT_INQUIRY', PAYMENT_INQUIRY
+            buildConfigField 'String', 'OPEN_ACCOUNT', OPEN_ACCOUNT
+            buildConfigField 'String', 'PAYMENT_PURCHASE', PAYMENT_PURCHASE
+            buildConfigField 'String', 'TOPUP_PAYMENT', TOPUP_PAYMENT
+
+        }
         release {
+            buildConfigField 'String', 'w0', w0_prod
+            buildConfigField 'String', 'w1', w1
+            buildConfigField 'String', 'w2', w2
+            buildConfigField 'String', 'w3', w3
+            buildConfigField 'String', 'w4', w4
+            buildConfigField 'String', 'w5', w5
+            buildConfigField 'String', 'AUTH', AUTH
+            buildConfigField 'String', 'VERIFY', VERIFY
+            buildConfigField 'String', 'INQUIRY', INQUIRY
+            buildConfigField 'String', 'MINISTATEMENT', MINISTATEMENT
+            buildConfigField 'String', 'OTP_GENERATE', OTP_GENERATE
+            buildConfigField 'String', 'OTP_VERIFY', OTP_VERIFY
+            buildConfigField 'String', 'BILL_INQUIRY', BILL_INQUIRY
+            buildConfigField 'String', 'BILL_PAYMENT', BILL_PAYMENT
+            buildConfigField 'String', 'TOPUP_INQUIRY', TOPUP_INQUIRY
+            buildConfigField 'String', 'PAYMENT_INQUIRY', PAYMENT_INQUIRY
+            buildConfigField 'String', 'OPEN_ACCOUNT', OPEN_ACCOUNT
+            buildConfigField 'String', 'PAYMENT_PURCHASE', PAYMENT_PURCHASE
+            buildConfigField 'String', 'TOPUP_PAYMENT', TOPUP_PAYMENT
+
             shrinkResources true
             minifyEnabled true
             useProguard true
@@ -85,5 +149,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:11.8.0'
 //    implementation 'com.google.android.gms:play-services-auth:16.0.1'
     testCompile 'junit:junit:4.12'
+
+   /* debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'*/
 }
 apply plugin: 'com.google.gms.google-services'

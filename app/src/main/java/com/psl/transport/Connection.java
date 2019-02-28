@@ -15,6 +15,7 @@ import com.psl.classes.InventoryClass;
 import com.psl.classes.JSUtils;
 import com.psl.classes.PlayerAttributes;
 import com.psl.classes.Transaction_Details;
+import com.psl.fantasy.league.season2.BuildConfig;
 
 import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
@@ -246,7 +247,7 @@ public class Connection {
 			String html = "";
 
 //		Config.w5+"?grant_type=client_credentials"
-			java.net.URL url = new URI(Config.w5 + "/oauth/v1/generate?grant_type=client_credentials").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.AUTH).toURL();
 
 
 			connection = (HttpURLConnection) url.openConnection();
@@ -314,7 +315,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,
 				strJSONBody);
 		try {
-			java.net.URL url = new URI(Config.w5 + "/mb/verifyaccount/v1/request").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.VERIFY).toURL();
 
 			String res=getResultHTTP(authHead,url,body);
 
@@ -356,7 +357,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,strJSONBody
 				);
 		try {
-			java.net.URL url = new URI(Config.w5 + "/balance/v1/inquiry").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.INQUIRY).toURL();
 			HashMap<String, String> params=new HashMap<>();
 
 			String res=getResultHTTP(authHead,url,body);
@@ -409,7 +410,7 @@ public class Connection {
 			);
 
 		try {
-			java.net.URL url = new URI(Config.w5 + "/ministatement/v0/inquiry").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.MINISTATEMENT).toURL();
 			HashMap<String, String> params=new HashMap<>();
 			String res=getResultHTTP(authHead,url,body);
 
@@ -458,7 +459,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,
 				strJSONBody);
 		try {
-			java.net.URL url = new URI(Config.w5 + "/otp/v1/generate").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.OTP_GENERATE).toURL();
 
 			String res=getResultHTTP(authHead,url,body);
 			insertUserLog(mobile_no,"otp",strJSONBody,res,"");
@@ -501,7 +502,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,
 				strJSONBody);
 		try {
-			java.net.URL url = new URI(Config.w5 + "/mb/otp/v1/verify").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.OTP_VERIFY).toURL();
 
 			String res=getResultHTTP(authHead,url,body);
 			insertUserLog(mobile_no,"otp",strJSONBody,res,"");
@@ -546,7 +547,7 @@ public class Connection {
 				strJSONBody);
 
 		try {
-			java.net.URL url = new URI(Config.w5 + "/bill/v1/inquiry").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.BILL_INQUIRY).toURL();
 
 
 			String res=getResultHTTP(authHead,url,body);
@@ -596,7 +597,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,strJSONBody);
 
 		try {
-			java.net.URL url = new URI(Config.w5 + "/bill/v1/payment").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.BILL_PAYMENT).toURL();
 			HashMap<String, String> params=new HashMap<>();
 
 			String res=getResultHTTP(authHead,url,body);
@@ -657,7 +658,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,
 				strJSONBody);
 		try {
-			java.net.URL url = new URI(Config.w5 + "/topup/v1/inquiry").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.TOPUP_INQUIRY).toURL();
 
 
 			String res=getResultHTTP(authHead,url,body);
@@ -704,7 +705,7 @@ public class Connection {
 		);
 
 		try {
-			java.net.URL url = new URI(Config.w5 + "/topup/v1/payment").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.TOPUP_PAYMENT).toURL();
 			HashMap<String, String> params=new HashMap<>();
 
 			String res=getResultHTTP(authHead,url,body);
@@ -760,7 +761,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,
 				strJSONBody);
 		try {
-			java.net.URL url = new URI(Config.w5 + "/payment/v1/inquiry").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.PAYMENT_INQUIRY).toURL();
 
 
 			String res=getResultHTTP(authHead,url,body);
@@ -817,16 +818,22 @@ public class Connection {
 			if(!jsonObj.isNull("responseCode"))
 			{
 				if(jsonObj.getString("responseCode").equalsIgnoreCase("0000")) {
-					res = "OrderId : "+jsonObj.getString("orderId");
+					res = "responseCode"+ (String) jsonObj.get("responseCode");
+					res += "OrderId : "+jsonObj.getString("orderId");
 					res +=" TransactionId : "+jsonObj.getString("transactionId");
 					res += (String) jsonObj.get("responseDesc");
 					return res;
 				}else{
-					res=(String) jsonObj.get("responseDesc");
-					return res;
-				}
-			}
+					res="-1"+(String)jsonObj.get("responseDesc");
 
+
+
+					return res;
+
+				}
+
+			}
+			insertUserLog(mobile_no,"ep payment",strJSONBody,res,"");
 			return res;
 
 		}
@@ -851,7 +858,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,strJSONBody);
 
 		try {
-			java.net.URL url = new URI(Config.w5 + "/payment/v1/request").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.PAYMENT_PURCHASE).toURL();
 			HashMap<String, String> params=new HashMap<>();
 
 			String res=getResultHTTP(authHead,url,body);
@@ -983,7 +990,7 @@ public class Connection {
 		RequestBody body = RequestBody.create(mediaType,strJSONBody
 		);
 		try {
-			java.net.URL url = new URI(Config.w5 + "/mb/account/v1/create").toURL();
+			java.net.URL url = new URI(Config.w5 + BuildConfig.OPEN_ACCOUNT).toURL();
 
 
 			String res=getResultHTTP(authHead,url,body);

@@ -129,6 +129,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserratblack"
+                    android:elevation="5dp"
                     android:id="@+id/wallet_type"></Spinner>
 
                 <EditText

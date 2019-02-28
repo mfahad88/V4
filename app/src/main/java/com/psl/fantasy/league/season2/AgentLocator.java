@@ -203,7 +203,7 @@ public class AgentLocator extends Fragment implements OnMapReadyCallback,
             mGoogleMap = googleMap;
             mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             boolean is_done = false;
-            mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+           /* mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 
                 @Override
                 public void onInfoWindowClick(Marker marker) {
@@ -242,7 +242,7 @@ public class AgentLocator extends Fragment implements OnMapReadyCallback,
                    adb.show();
                    //Toast.makeText(getActivity(),mobile,1000).show();
                 }
-            });
+            });*/
 
             //Initialize Google Play Services
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.psl.fantasy.league.season2.BuildConfig;
 import com.psl.fantasy.league.season2.InfoDialog;
 import com.psl.fantasy.league.season2.Profile;
 import com.psl.fantasy.league.season2.R;
@@ -587,14 +588,15 @@ public class Config {
     }
 
 
-    public static  String w5 = "https://api.jsbl.com";
-    public static  String w3 = "YuvttXDI9TCbEbrKztBfAKv0MYYX89Bn";
-    public static  String w4 = "HNQrkcsrd4OnbeU6";
+    public static  String w5 = BuildConfig.w5;
+    public static  String w3 = BuildConfig.w3;
+    public static  String w4 = BuildConfig.w4;
     //public static  String w0 = "http://"+getWS()+"/";
-    public static  String w0 = "https://apnicricketleague.eastus.cloudapp.azure.com/PSL/";
-//    public static String w0 = "http://172.28.28.78:82/";
-    public static String w1 = "CJy1//PsvDYeMNZ/UTERPg==";
-    public static String w2 = "12U/jYHQ4WkeMNZ/UTERPg==";
+//    public static  String w0 = "https://apnicricketleague.eastus.cloudapp.azure.com/PSL/";
+
+    public static String w0 = BuildConfig.w0;
+    public static String w1 = BuildConfig.w1;
+    public static String w2 = BuildConfig.w2;
 
 
     public static long getPostDifference(Context context) {

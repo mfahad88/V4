@@ -50,7 +50,7 @@ public class CreateWalletAccount extends Fragment {
 
     String password;
 
-    private boolean checkAndRequestPermissions() {
+    /*private boolean checkAndRequestPermissions() {
 
         int receiveSMS = ContextCompat.checkSelfPermission(getActivity(),
                 android.Manifest.permission.RECEIVE_SMS);
@@ -74,7 +74,7 @@ public class CreateWalletAccount extends Fragment {
         }
         return true;
     }
-
+*/
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -82,7 +82,7 @@ public class CreateWalletAccount extends Fragment {
         View view = inflater.inflate(R.layout.activity_create_wallet, container, false);
         // super.onCreate(savedInstanceState);
 
-        checkAndRequestPermissions();
+        //checkAndRequestPermissions();
 
         txtMobNumber = (EditText) view.findViewById(R.id.txtUserMobNumber);
         txtMobNumber1 = (EditText) view.findViewById(R.id.txtUserMobNumber1);

@@ -226,7 +226,7 @@ public class SplashScreen extends Activity {
             e.printStackTrace();
         }
     }
-    public void loadIMEI() {
+    /*public void loadIMEI() {
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -249,7 +249,7 @@ public class SplashScreen extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private class GetRuleBook extends AsyncTask<String, String, String> {
         String mResult;
@@ -319,7 +319,7 @@ public class SplashScreen extends Activity {
             // other 'case' lines to check for other
             // permissions this app might request
         }
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        /*if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
 
             try {
@@ -342,7 +342,7 @@ public class SplashScreen extends Activity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
         callAccessories();
 

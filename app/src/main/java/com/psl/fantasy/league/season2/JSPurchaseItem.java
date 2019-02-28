@@ -444,6 +444,7 @@ public class JSPurchaseItem extends Fragment {
                     //res = conn.JSPurchaseItemINQ(strAuthHeader, strMobNmbr, strAmount);
                     res = conn.EPPurchaseItemINQ(list_url.get(1),strAuthHeader,"6743" + sdf.format(date),strAmount ,edtMobileNumber.getText().toString(), edtEmail.getText().toString());
 
+
                 }
             }
             return null;
@@ -457,7 +458,8 @@ public class JSPurchaseItem extends Fragment {
             if (res.startsWith("-1")) {
                 showAlert2(res.replace("-1", ""), "Failure");
 
-            } else {
+            }
+            else {
                 if (dealItems == null) {
                     for (int i = 0; i < JSUtils.shopingCartList.size(); i++) {
 

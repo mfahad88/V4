@@ -50,7 +50,7 @@ public class RegisterationOTPActivity extends Activity {
 
         setContentView(R.layout.activity_otp);
         //Config.PopulateHeader2(OTPActivity.this,findViewById(R.id.helmet_layout));
-        checkAndRequestPermissions();
+        //checkAndRequestPermissions();
         this.setFinishOnTouchOutside(false);
 
         layoutOTPVeri=findViewById(R.id.layoutOTPVeri);
@@ -286,7 +286,7 @@ public class RegisterationOTPActivity extends Activity {
 
 
 
-    private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
+ /*   private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equalsIgnoreCase("otp")) {
@@ -295,14 +295,14 @@ public class RegisterationOTPActivity extends Activity {
                 txtOTPCode.setText(extractOTP(message));
             }
         }
-    };
+    };*/
     @Override
     public void onResume() {
-        LocalBroadcastManager.getInstance(this).
-                registerReceiver(smsReceiver, new IntentFilter("otp"));
+        /*LocalBroadcastManager.getInstance(this).
+                registerReceiver(smsReceiver, new IntentFilter("otp"));*/
         super.onResume();
     }
-    private  boolean checkAndRequestPermissions() {
+    /*private  boolean checkAndRequestPermissions() {
 
         int receiveSMS = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.RECEIVE_SMS);
@@ -325,7 +325,7 @@ public class RegisterationOTPActivity extends Activity {
             return false;
         }
         return true;
-    }
+    }*/
 
     void showAlert(String message)
     {

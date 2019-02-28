@@ -1265,6 +1265,7 @@ public class XMLParser {
                     } catch (Exception e) {
                     }*/
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

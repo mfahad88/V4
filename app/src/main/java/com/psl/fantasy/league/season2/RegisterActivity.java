@@ -31,6 +31,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.UnderlineSpan;
@@ -181,7 +182,8 @@ public class RegisterActivity extends AppCompatActivity {
     Account[] account;
     String[] StringArray;
     public static final int RequestPermissionCode = 1;
-
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     void getAlert(String text) {
         new ViewDialog(RegisterActivity.this).showDialog(RegisterActivity.this, "");
         /*new AlertDialog.Builder(RegisterActivity.this)
@@ -200,7 +202,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user);
-        checkAndRequestPermissions();
+        //checkAndRequestPermissions();
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
@@ -422,7 +424,10 @@ public class RegisterActivity extends AppCompatActivity {
                 if (password_strength_check.equalsIgnoreCase("Weak")) {
                     showAlert("Must be 6-20 characters, contain at least one digit and one alphabetic character, and can contains special characters !@#$%^&*()");
                     return;
-                }
+                }if(!validateEmail(et_email.getText().toString())) {
+                        showAlert("Please enter email");
+                    }
+
 
                 if (!checkBox.isChecked()) {
                     showAlert("Terms and conditions must be checked");
@@ -518,6 +523,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     pwd = et_enterpassword.getText().toString();
                     newMemberSignUP();
+
                 }
 
             }
@@ -622,7 +628,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     void newMemberSignUP() {
-        new CustomAsyncTask().execute();
+        if(validateEmail(et_email.getText().toString())) {
+
+            new CustomAsyncTask().execute();
+        }else{
+            showAlert("Please enter email");
+        }
+
     }
 
 
@@ -649,7 +661,7 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     if (result.contains("You have been registered successfully")) {
                         showAlert2(result, "Success");
-                    } else if (result.toUpperCase().contains("ALREADY_MEMBER") ||
+                    } else if (/*result.toUpperCase().contains("ALREADY_MEMBER") ||*/
                             result.endsWith("already_member"))
                         showAlert2("The Phone number is already registered.", "Alert");
                     else
@@ -703,7 +715,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void selectImage() {
+    /*private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
         builder.setTitle("Add Photo!");
@@ -723,7 +735,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         builder.show();
-    }
+    }*/
 
     @SuppressLint("NewApi")
     /*protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -1197,8 +1209,11 @@ public class RegisterActivity extends AppCompatActivity {
         return otp;
     }
 
-
-    private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }
+   /* private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equalsIgnoreCase("otp")) {
@@ -1207,16 +1222,17 @@ public class RegisterActivity extends AppCompatActivity {
                 et_otp.setText(extractOTP(message));
             }
         }
-    };
+    };*/
 
     @Override
     public void onResume() {
         super.onResume();
-        LocalBroadcastManager.getInstance(this).
-                registerReceiver(smsReceiver, new IntentFilter("otp"));
+        /*LocalBroadcastManager.getInstance(this).
+                registerReceiver(smsReceiver, new IntentFilter("otp"));*/
 
     }
 
+/*
     private boolean checkAndRequestPermissions() {
         try {
             int receiveSMS = ContextCompat.checkSelfPermission(this,
@@ -1244,6 +1260,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
+*/
 
 
 }
