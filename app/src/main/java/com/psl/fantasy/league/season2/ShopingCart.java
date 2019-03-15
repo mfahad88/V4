@@ -18,7 +18,8 @@ import android.widget.Toast;
 import com.psl.classes.Config;
 import com.psl.classes.InventoryClass;
 import com.psl.classes.JSUtils;
-import com.psl.fantasy.league.season2.R;;
+import com.psl.fantasy.league.season2.R;
+import com.psl.transport.Connection;;
 
 
 public class ShopingCart extends Fragment {
@@ -29,6 +30,7 @@ public class ShopingCart extends Fragment {
     TextView txtTotalPrice;
     int totalPrice=0;
     Button btneditcart,btnpurchase,btnOK,btnCancel;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -37,7 +39,7 @@ public class ShopingCart extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         sharedPreferences=getActivity().getSharedPreferences(Config.SHARED_PREF, Context.MODE_PRIVATE);
-        View view =  inflater.inflate(R.layout.activity_shoping_cart, container, false);
+        final View view =  inflater.inflate(R.layout.activity_shoping_cart, container, false);
         try{view.findViewById(R.id.textView11).bringToFront();} catch (Exception e){}
 
         Config.PopulateHeader(getActivity(),view.findViewById(R.id.helmet_layout));
@@ -92,6 +94,8 @@ public class ShopingCart extends Fragment {
 
                 }
                 else {
+
+
                     Fragment fragment = new JSPurchaseItem();
                     Bundle bundle = new Bundle();
                     bundle.putString(Config.JS_Item_Purchase_Price, totalPrice + "");
@@ -100,6 +104,7 @@ public class ShopingCart extends Fragment {
                     fragment.setArguments(bundle);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.content_frame, fragment);
+
                     ft.commit();
                 }
             }
@@ -233,6 +238,7 @@ public class ShopingCart extends Fragment {
             txtTotalPrice.setText("PKR "+totalPrice);
 
             layoutBoosters.addView(myView);
+
         }
     }
 }

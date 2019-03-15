@@ -35,33 +35,93 @@
 # OkHttp platform used only on JVM and when Conscrypt dependency is available.
 #-dontwarn okhttp3.internal.platform.ConscryptPlatform
 
--ignorewarnings
+#-ignorewarnings
 
-#-keep class org.kobjects.** { *; }
-#-keep class org.ksoap2.** { *; }
-#-keep class org.kxml2.** { *; }
-#-keep class org.xmlpull.** { *; }
+-keep class org.kobjects.** { *; }
+-keep class org.ksoap2.** { *; }
+-keep class org.kxml2.** { *; }
+-keep class org.xmlpull.** { *; }
 
-#-keep class com.firebase.** { *; }
-#-keep class org.apache.** { *; }
-#-keepnames class com.fasterxml.jackson.** { *; }
-#-keepnames class javax.servlet.** { *; }
-#-keepnames class org.ietf.jgss.** { *; }
-#-dontwarn org.w3c.dom.**
-#-dontwarn org.joda.time.**
-#-dontwarn org.shaded.apache.**
-#-dontwarn org.ietf.jgss.**
+-keep class com.firebase.** { *; }
+-keep class org.apache.** { *; }
+-keepnames class com.fasterxml.jackson.** { *; }
+-keepnames class javax.servlet.** { *; }
+-keepnames class org.ietf.jgss.** { *; }
+-dontwarn org.w3c.dom.**
+-dontwarn org.joda.time.**
+-dontwarn org.shaded.apache.**
+-dontwarn org.ietf.jgss.**
 
 # Only necessary if you downloaded the SDK jar directly instead of from maven.
-#-keep class com.shaded.fasterxml.jackson.** { *; }
+-keep class com.shaded.fasterxml.jackson.** { *; }
 
 
 
-#-keepnames class com.facebook.FacebookActivity
-#-keepnames class com.facebook.CustomTabActivity
+-keepnames class com.facebook.FacebookActivity
+-keepnames class com.facebook.CustomTabActivity
 
-#-keep class com.facebook.login.Login
+-keep class com.facebook.login.Login
 
-#-renamesourcefileattribute com.psl.**
-#-keep class **
+-renamesourcefileattribute com.psl.**
+ -keep class *
 #-keepattributes *
+
+
+
+#-keep public class * extends android.app.Activity
+#-keep public class * extends android.app.Application
+#-keep public class * extends android.app.Service
+#-keep public class * extends android.content.BroadcastReceiver
+#-keep public class * extends android.content.ContentProvider
+-dontwarn android.support.v7.**
+#-keep class android.support.v7.** { *; }
+#-keep interface android.support.v7.** { *; }
+#
+#
+#-keep public class * extends android.view.View {
+#      public <init>(android.content.Context);
+#      public <init>(android.content.Context, android.util.AttributeSet);
+#      public <init>(android.content.Context, android.util.AttributeSet, int);
+#      public void set*(...);
+#}
+#
+#-keepclasseswithmembers class * {
+#    public <init>(android.content.Context, android.util.AttributeSet);
+#}
+#
+#-keepclasseswithmembers class * {
+#    public <init>(android.content.Context, android.util.AttributeSet, int);
+#}
+#
+#
+#
+#-keepclassmembers class * extends android.content.Context {
+#    public void *(android.view.View);
+#    public void *(android.view.MenuItem);
+#}
+#
+#-keepclassmembers class * implements android.os.Parcelable {
+#    static ** CREATOR;
+#}
+#
+#-keepclassmembers class **.R$* {
+#    public static <fields>;
+#}
+#
+#-keepclassmembers class * {
+#    @android.webkit.JavascriptInterface <methods>;
+#}
+#-keepclasseswithmembernames class * {
+#    native <methods>;
+#}
+
+-dontwarn org.xmlpull.v1.**
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp3.**
+#-keep class com.squareup.okhttp3.** { ; }
+#-keep interface com.squareup.okhttp3.* { *; }
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn org.bouncycastle.**
+-dontwarn org.opencv.**
+-dontwarn retrofit2.**

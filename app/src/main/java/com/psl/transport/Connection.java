@@ -75,6 +75,7 @@ public class Connection {
 	String userID;
 	Date date;
 	private String mobile_no="";
+
 	//static String URL = "https://42.83.84.170/AMS_Service1.asmx" ;
 	SharedPreferences sharedPreferences;
 	public Connection(Context ctx){
@@ -822,18 +823,24 @@ public class Connection {
 					res += "OrderId : "+jsonObj.getString("orderId");
 					res +=" TransactionId : "+jsonObj.getString("transactionId");
 					res += (String) jsonObj.get("responseDesc");
-					return res;
+					List<Transaction_Details> transaction_detail =
+							prepareTransListPurchaseItem(jsonObj.getString("transactionId"),mobile_no,userID,strJSONBody,res.replace("-1",""),"SUCCESS");
+					String test=UpdateTransactionNew(transaction_detail);
+					insertUserLog(mobile_no,"ep payment",strJSONBody,res,"");
+
+                    return res;
 				}else{
 					res="-1"+(String)jsonObj.get("responseDesc");
 
 
+					insertUserLog(mobile_no,"ep payment",strJSONBody,res,"");
 
 					return res;
 
 				}
 
 			}
-			insertUserLog(mobile_no,"ep payment",strJSONBody,res,"");
+
 			return res;
 
 		}
@@ -1041,6 +1048,7 @@ public class Connection {
 					.writeTimeout(3, TimeUnit.MINUTES)
 					.readTimeout(3, TimeUnit.MINUTES)
 					.build();
+
 			MediaType mediaType = MediaType.parse("application/json");
 
 
@@ -1592,6 +1600,7 @@ int retry=0;
 
 				soapDetail[i].addProperty("number_swaps",swap_count);
 				soapDetail[i].addProperty("points",points);
+
 				soapDetails.addSoapObject(soapDetail[i]);
 			}
 
@@ -1777,11 +1786,11 @@ int retry=0;
 
 			}
 			result=(SoapObject)envelop.bodyIn;
-			//insertUserLog(mobile_no,Soap_Action,((SoapObject)envelop.bodyOut).toString(),result.toString(),"");
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-//			insertUserLog(mobile_no,Soap_Action,((SoapObject)envelop.bodyOut).toString(),"",e.getMessage());
+
 		}
 
 	}
@@ -1853,10 +1862,10 @@ int retry=0;
 			else
 			{
 				HttpTransportSE androidHttpTransport = new HttpTransportSE(null,URL,300000) ; //for Local
-
 				androidHttpTransport.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 				androidHttpTransport.debug=true;
 				androidHttpTransport.call( Soap_Action, envelop);
+
 			}
 
 
@@ -1924,17 +1933,17 @@ int retry=0;
 		String result="";
 		String MethodName="user_log";
 
-		SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
-		soapRequest.addProperty("w_username", Config.w1);
-		soapRequest.addProperty("w_password", Config.w2);
-		soapRequest.addProperty("contact_no",contact_no);
-		soapRequest.addProperty("method_name",method_name);
-		soapRequest.addProperty("request",request);
-		soapRequest.addProperty("response",response);
-		soapRequest.addProperty("exception",exception);
-		if(!contact_no.equalsIgnoreCase("")) {
-			result = getResult(soapRequest, MethodName);
-		}
+			SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
+			soapRequest.addProperty("w_username", Config.w1);
+			soapRequest.addProperty("w_password", Config.w2);
+			soapRequest.addProperty("contact_no",contact_no);
+			soapRequest.addProperty("method_name",method_name);
+			soapRequest.addProperty("request",request);
+			soapRequest.addProperty("response",response);
+			soapRequest.addProperty("exception",exception);
+			if(!contact_no.equalsIgnoreCase("")) {
+				result = getResult(soapRequest, MethodName);
+			}
 		return result;
 	}
 

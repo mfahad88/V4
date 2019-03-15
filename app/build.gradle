@@ -7,8 +7,8 @@ android {
         applicationId "com.psl.fantasy.league"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 41
-        versionName "2.0.0"
+        versionCode 42
+        versionName "2.0.1"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -132,14 +132,14 @@ dependencies {
     //compile 'com.paysyslabs:instascan:1.1.5-DG-0.2'
     //compile 'com.google.firebase:firebase-firestore:11.4.2'
     implementation 'com.paysyslabs:instascan:1.1.7.2-SNAPSHOT'
-//    implementation 'com.paysyslabs:instascan:1.1.7.2'
+    //    implementation 'com.paysyslabs:instascan:1.1.7.2'
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'org.jsoup:jsoup:1.8.3'
     // compile 'com.paysyslabs:instascan:1.1.7.1'
     implementation 'com.google.firebase:firebase-messaging:11.8.0'
     implementation 'com.android.support:support-v4:26.0.1'
     implementation 'com.android.support:design:26.0.1'
-//    implementation 'com.facebook.android:facebook-android-sdk:4.26.0'
+    //    implementation 'com.facebook.android:facebook-android-sdk:4.26.0'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
@@ -147,12 +147,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:11.8.0'
     implementation 'com.facebook.android:facebook-marketing:[4,5)'
     implementation 'com.google.firebase:firebase-auth:11.8.0'
-//    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    //    implementation 'com.google.android.gms:play-services-auth:16.0.1'
     testCompile 'junit:junit:4.12'
-
-   /* debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
-    // Optional, if you use support library fragments:
-    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'*/
+    /* debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+        releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+        // Optional, if you use support library fragments:
+        debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'*/
+    implementation files('libs/fortumo-in-app-android-sdk.jar')
 }
 apply plugin: 'com.google.gms.google-services'

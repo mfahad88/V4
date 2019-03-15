@@ -52,6 +52,7 @@ public class JSPurchaseItem extends Fragment {
     Date date;
     SimpleDateFormat sdf;
     List<String> list_url=null;
+    Connection conn;
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -68,7 +69,7 @@ public class JSPurchaseItem extends Fragment {
         userID = sharedPreferences.getString(Config.USER_ID, "");
 
         Config.PopulateHeader(getActivity(), view.findViewById(R.id.helmet_layout));
-
+        conn=new Connection(view.getContext());
         strAmount = getArguments().getString(Config.JS_Item_Purchase_Price);
         strItemName = getArguments().getString(Config.JS_Item_Purchase_Name);
         itemResId = getArguments().getInt(Config.JS_Item_Purchase_Res, 0);
@@ -96,6 +97,7 @@ public class JSPurchaseItem extends Fragment {
         edtMobileNumber.setText(strMobNmbr);
         txtItemPrice.setText("PKR " + strAmount);
         imgItem.setImageResource(itemResId);
+
         new MyAsyncIntegration().execute();
         spinnerWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -266,6 +268,20 @@ public class JSPurchaseItem extends Fragment {
         protected Void doInBackground(Void... params) {
             Connection conn = new Connection(getActivity());
             res = conn.JSPurchaseItemPayment(strAuthHeader, strMobNmbr, strAmount, strOTP, strCharges, strItemName);
+            if(!res.startsWith("-1")){
+                StringBuilder sb=new StringBuilder();
+                for(int i=0;i<JSUtils.shopingCartList.size();i++){
+                    InventoryClass iv=JSUtils.shopingCartList.get(i);
+                    sb.append("Id= "+iv.getId()+",");
+                    sb.append("Name= "+iv.getName()+",");
+                    sb.append("Price= "+iv.getPrice()+",");
+                    sb.append("Item Count= "+iv.getItemCount()+",");
+                    sb.append("Description= "+iv.getDescription()+",");
+                    sb.append("Deal of day= "+iv.getDealOfDay());
+                }
+                conn.insertUserLog(sharedPreferences.getString(Config.JS_Mobile_Number, ""), "Purchase",
+                        sb.toString(), "  ", " ");
+            }
             return null;
 
         }
@@ -406,6 +422,7 @@ public class JSPurchaseItem extends Fragment {
 
                     }
                 }
+
                 JSUtils.shopingCartList.clear();
                 showAlert2("You have successfully purchased item(s)" + strItemName + ".\n" + Config.JS_TransactionID + " : " + res, "Success");
 
@@ -443,8 +460,20 @@ public class JSPurchaseItem extends Fragment {
                     strAuthHeader = res;
                     //res = conn.JSPurchaseItemINQ(strAuthHeader, strMobNmbr, strAmount);
                     res = conn.EPPurchaseItemINQ(list_url.get(1),strAuthHeader,"6743" + sdf.format(date),strAmount ,edtMobileNumber.getText().toString(), edtEmail.getText().toString());
-
-
+                    if(!res.startsWith("-1")){
+                        StringBuilder sb=new StringBuilder();
+                        for(int i=0;i<JSUtils.shopingCartList.size();i++){
+                            InventoryClass iv=JSUtils.shopingCartList.get(i);
+                            sb.append("Id= "+iv.getId()+",");
+                            sb.append("Name= "+iv.getName()+",");
+                            sb.append("Price= "+iv.getPrice()+",");
+                            sb.append("Item Count= "+iv.getItemCount()+",");
+                            sb.append("Description= "+iv.getDescription()+",");
+                            sb.append("Deal of day= "+iv.getDealOfDay());
+                        }
+                        conn.insertUserLog(sharedPreferences.getString(Config.JS_Mobile_Number, ""), "Shop",
+                                sb.toString(), "  ", " ");
+                    }
                 }
             }
             return null;
@@ -588,6 +617,7 @@ public class JSPurchaseItem extends Fragment {
 
                     }
                 }
+
                 JSUtils.shopingCartList.clear();
                 //showAlert2("You have successfully purchased item(s)" + strItemName + ".\n" + Config.JS_TransactionID + " : " + res, "Success");
                 showAlert2(res, "Success");
@@ -596,8 +626,6 @@ public class JSPurchaseItem extends Fragment {
                     JSUtils.inventoryClassList.get(i).clearItemCount();
                 }
             }
-
-
         }
     }
 

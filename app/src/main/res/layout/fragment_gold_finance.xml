@@ -69,6 +69,18 @@
                 android:paddingLeft="20dp"
                 android:textSize="12sp" />
 
+            <EditText
+                android:id="@+id/edt_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                android:background="@drawable/bg_field"
+                android:clickable="false"
+                android:hint="City"
+                android:inputType="text"
+                android:maxLength="20"
+                android:paddingLeft="20dp"
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/txt_email"
@@ -85,7 +97,18 @@
                 android:textSize="12sp" />
 
 
-            <EditText
+            <Spinner
+                android:layout_width="286dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="start"
+                android:paddingTop="35dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:textSize="12sp"
+                android:id="@+id/spinner"
+                />
+            <!--<EditText
                 android:id="@+id/txt_comment"
                 android:layout_width="286dp"
                 android:layout_height="wrap_content"
@@ -100,7 +123,7 @@
                 android:inputType="textMultiLine"
                 android:maxLength="150"
                 android:paddingLeft="20dp"
-                android:textSize="12sp" />
+                android:textSize="12sp" />-->
 
             <Button
                 android:id="@+id/iv_save"
@@ -108,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_bg_small"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:text="Apply"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

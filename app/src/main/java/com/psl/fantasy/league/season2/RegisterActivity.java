@@ -143,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
      * Called when the activity is first created.
      */
     //EditText txtName,txtEmail,txtPwd,txtRepwd,txtCellNumber,txtCNIC,txtjsWallet;
-    EditText et_fistname, et_lastname, et_email, et_mobilenumber;
+    EditText et_fistname, et_lastname, et_email, et_mobilenumber,edt_referral;
     Spinner spinner_gender, spinner_age;
     String firstname, lastname, mobilenumber, gender, age;
     String name, email, pwd, repwd, address, cellNumber, jsWallet, cnic;
@@ -242,6 +242,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_mobilenumber = (EditText) findViewById(R.id.txt_mobilenumber);
         et_mobilenumber.setHint("Mobile number field will be used to\n send updates, notifications, otp etc.");
         et_email = (EditText) findViewById(R.id.txt_email);
+        edt_referral=(EditText) findViewById(R.id.edt_referral);
         spinner_age = (Spinner) findViewById(R.id.spinner_age);
         spinner_gender = (Spinner) findViewById(R.id.spinner_gender);
         btn_registeration_end = (Button) findViewById(R.id.btnRegister_new);
@@ -425,8 +426,8 @@ public class RegisterActivity extends AppCompatActivity {
                     showAlert("Must be 6-20 characters, contain at least one digit and one alphabetic character, and can contains special characters !@#$%^&*()");
                     return;
                 }if(!validateEmail(et_email.getText().toString())) {
-                        showAlert("Please enter email");
-                    }
+                    showAlert("Please enter email");
+                }
 
 
                 if (!checkBox.isChecked()) {
@@ -645,6 +646,9 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             Connection conn = new Connection(RegisterActivity.this);
+            if(!TextUtils.isEmpty(edt_referral.getText())){
+
+            }
             result = conn.CreateUser(email, pwd, name, email, cellNumber, encoded_image, cnic, jsWallet, firstname, lastname, gender, age, register_via);
             return null;
         }
@@ -940,7 +944,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
 
-           // Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            // Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             //handleSignInResult(task);
             try {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -995,32 +999,32 @@ public class RegisterActivity extends AppCompatActivity {
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-                                    //You can fetch user info like this…
-                                    //object.getJSONObject(“picture”).
-                                    //getJSONObject("data").getString("url");
-                                    //object.getString("name");
-                                    //object.getString(“email”));
-                                    //object.getString(“id”));
+                                //You can fetch user info like this…
+                                //object.getJSONObject(“picture”).
+                                //getJSONObject("data").getString("url");
+                                //object.getString("name");
+                                //object.getString(“email”));
+                                //object.getString(“id”));
 
-                                    loggedin = true;
-                                    register_via = "facebook";
+                                loggedin = true;
+                                register_via = "facebook";
 
-                                    final String email = object.optString("email");
-                                    final String name = object.optString("first_name") + " " + object.optString("last_name");
-                                    final String id = object.optString("id");
+                                final String email = object.optString("email");
+                                final String name = object.optString("first_name") + " " + object.optString("last_name");
+                                final String id = object.optString("id");
 
-                                    final String f_name = object.optString("first_name");
-                                    final String l_name = object.optString("last_name");
+                                final String f_name = object.optString("first_name");
+                                final String l_name = object.optString("last_name");
 
-                                    et_fistname.setText(f_name);
-                                    et_lastname.setText(l_name);
-                                    et_email.setText(email);
+                                et_fistname.setText(f_name);
+                                et_lastname.setText(l_name);
+                                et_email.setText(email);
 
-                                    layout_registeration.setVisibility(View.VISIBLE);
-                                    layout_first.setVisibility(View.GONE);
-                                    which_layout = "register";
+                                layout_registeration.setVisibility(View.VISIBLE);
+                                layout_first.setVisibility(View.GONE);
+                                which_layout = "register";
 
-                                    //tv.setText("Firstname: "+object.getString("first_name")+"\nLastName: "+object.getString("last_name")+"\nEmail: "+object.getString("email")+"\nId: "+object.getString("id"));
+                                //tv.setText("Firstname: "+object.getString("first_name")+"\nLastName: "+object.getString("last_name")+"\nEmail: "+object.getString("email")+"\nId: "+object.getString("id"));
 
 
                             }
@@ -1127,9 +1131,9 @@ public class RegisterActivity extends AppCompatActivity {
         String option = "";
         Context context;
 
-            //boolean IS_EDITED;
+        //boolean IS_EDITED;
         public ViewDialog(Context context) {
-                super(context);
+            super(context);
             this.context = context;
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }

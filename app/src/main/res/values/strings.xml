@@ -12,6 +12,7 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="digits_to_allow_password">&amp;!@#$%^*()._- ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
+    <!--<string name="digits_to_allow_referral">0123456789</string>-->
     <string name="digits_to_allow_team_name">&amp; _ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
 
     <!-- Strings related to login -->

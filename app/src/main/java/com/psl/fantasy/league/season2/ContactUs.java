@@ -105,7 +105,7 @@ public class ContactUs extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-
+                StringBuilder builder=new StringBuilder();
                 Connection connection = new Connection("send_email", getActivity());
 //                mResult=connection.sendEmail(user_id,params[0],params[1],params[2],params[3]);
                 connection.addProperties("user_id", user_id);
@@ -118,7 +118,9 @@ public class ContactUs extends Fragment {
                 connection.ConnectForSingleNode();
 
                 SoapObject object = connection.Result();
+
                 mResult = object.toString();
+                //connection.insertUserLog(sharedPreferences.getString(Config.JS_Mobile_Number,""),"send_email",((SoapObject)envelop.bodyOut).toString(),mResult,"");
             } catch (Exception e) {
                 e.printStackTrace();
             }

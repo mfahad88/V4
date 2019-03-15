@@ -8,7 +8,9 @@
         android:id="@+id/first_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="261dp"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -18,17 +20,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
             android:layout_toLeftOf="@id/txt_OR"
-            android:background="@drawable/gmail_signup" />
+            android:background="@drawable/gmail_signup"
+            android:visibility="gone" />
 
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/fb_button"
@@ -206,17 +208,19 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="150dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/mainlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -266,27 +270,27 @@
                 android:hint=""
                 android:inputType="numberDecimal"
                 android:maxLength="11"
-                android:paddingRight="20dp"
                 android:maxLines="3"
                 android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:textSize="11sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
                 android:layout_marginTop="-5dp"
+                android:layout_marginRight="40dp"
                 android:background="@color/com_facebook_button_border_color_focused"
-                android:paddingBottom="2dp"
                 android:paddingLeft="5dp"
-                android:paddingRight="2dp"
                 android:paddingTop="2dp"
+                android:paddingRight="2dp"
+                android:paddingBottom="2dp"
                 android:text="Mobile number field will be used to send updates, notifications, otp etc."
                 android:textColor="@color/black"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
             <EditText
@@ -334,13 +338,28 @@
                 android:paddingLeft="20dp"
                 android:textSize="11sp" />
 
+            <EditText
+                android:id="@+id/edt_referral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:background="@drawable/bg_field"
+                android:ems="10"
+                android:singleLine="true"
+                android:hint="Referral"
+                android:inputType="number"
+                android:maxLength="50"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="11sp" />
+
             <LinearLayout
                 android:id="@+id/passwrodLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="0dp"
+                android:layout_marginBottom="5dp"
                 android:visibility="visible">
 
                 <TextView

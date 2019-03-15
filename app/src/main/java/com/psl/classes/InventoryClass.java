@@ -96,5 +96,17 @@ public class InventoryClass implements Serializable{
     public static final String TeamSafety =      "team safety";
     public static final String PlayerSafety =      "player safety";
 
-
+    @Override
+    public String toString() {
+        return "InventoryClass{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", power='" + power + '\'' +
+                ", dealOfDay='" + dealOfDay + '\'' +
+                ", description='" + description + '\'' +
+                ", image=" + image +
+                ", itemCount=" + itemCount +
+                '}';
+    }
 }

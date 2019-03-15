@@ -23,7 +23,7 @@ public class HttpTranspor extends Transport
         super(url);
     }
 
-    public void call(String soapAction, SoapEnvelope envelope)
+    public void call(String soapAction, SoapEnvelope envelope,String delta)
         throws IOException, XmlPullParserException
     {
         if(soapAction == null)
@@ -40,6 +40,7 @@ public class HttpTranspor extends Transport
         connection.setRequestProperty("Content-Type", "text/xml");
         connection.setRequestProperty("Connection", "close");
         connection.setRequestProperty("Content-Length", "" + requestData.length);
+        connection.setRequestProperty("delta",delta);
         connection.setRequestMethod("POST");
         connection.connect();
         OutputStream os = connection.openOutputStream();
