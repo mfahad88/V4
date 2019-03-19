@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             R.drawable.drawer_prizes,//12
             R.drawable.drawer_contact_us,//12
             R.drawable.drawer_gold_finance,
+            R.drawable.refer,
             R.drawable.drawer_logout // logout//13
 
     };
@@ -663,6 +664,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragment = new GoldFinanceFragment();
                         break;
                     case 12:
+                        fragment = new InviteFriendFragment();
+                        break;
+                    case 13:
                         getAlert("Are you sure you want to log out?");
                         if (iv_nc.getVisibility() == View.VISIBLE)
                             iv_nc.setVisibility(View.VISIBLE);
@@ -1004,6 +1008,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void run() {
                         try {
                             if (guid.trim().equals(""))
+
                                 FirebaseInstanceId.getInstance().deleteInstanceId();
                         } catch (IOException e) {
                             e.printStackTrace();

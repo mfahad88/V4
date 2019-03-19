@@ -185,12 +185,12 @@ public class SplashScreen extends Activity {
     }
     private void checkLocationPermission() {
         try {
-            if (ActivityCompat.checkSelfPermission(SplashScreen.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if ((ActivityCompat.checkSelfPermission(SplashScreen.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(SplashScreen.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)){
 
                 // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(SplashScreen.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if ((ActivityCompat.shouldShowRequestPermissionRationale(SplashScreen.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) &&
+                        (ActivityCompat.shouldShowRequestPermissionRationale(SplashScreen.this, Manifest.permission.READ_PHONE_STATE))){
 
                     // Show an explanation to the user *asynchronously* -- don't block
                     // this thread waiting for the user's response! After the user
@@ -204,7 +204,7 @@ public class SplashScreen extends Activity {
                                     try {
                                         //Prompt the user once explanation has been shown
                                         ActivityCompat.requestPermissions(SplashScreen.this,
-                                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE},
                                                 MY_PERMISSIONS_REQUEST_STORAGE);
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -218,7 +218,7 @@ public class SplashScreen extends Activity {
                 } else {
                     // No explanation needed, we can request the permission.
                     ActivityCompat.requestPermissions(SplashScreen.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE},
                             MY_PERMISSIONS_REQUEST_STORAGE);
                 }
             }

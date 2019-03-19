@@ -50,7 +50,7 @@ android {
         def TOPUP_PAYMENT = '"' + TOPUP_PAYMENT + '"' ?: '"Define TOPUP_PAYMENT"';
 
 
-        debug{
+        debug {
             buildConfigField 'String', 'w0', w0_uat
             buildConfigField 'String', 'w1', w1
             buildConfigField 'String', 'w2', w2
@@ -93,9 +93,9 @@ android {
             buildConfigField 'String', 'PAYMENT_PURCHASE', PAYMENT_PURCHASE
             buildConfigField 'String', 'TOPUP_PAYMENT', TOPUP_PAYMENT
 
-            shrinkResources true
-            minifyEnabled true
-            useProguard true
+            shrinkResources false
+            minifyEnabled false
+            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -153,6 +153,5 @@ dependencies {
         releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
         // Optional, if you use support library fragments:
         debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'*/
-    implementation files('libs/fortumo-in-app-android-sdk.jar')
 }
 apply plugin: 'com.google.gms.google-services'

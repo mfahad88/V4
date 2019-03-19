@@ -647,9 +647,9 @@ public class RegisterActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             Connection conn = new Connection(RegisterActivity.this);
             if(!TextUtils.isEmpty(edt_referral.getText())){
-
+                result = conn.CreateUser(email, pwd, name, email, cellNumber, encoded_image, cnic, jsWallet, firstname, lastname, gender, age, register_via);
             }
-            result = conn.CreateUser(email, pwd, name, email, cellNumber, encoded_image, cnic, jsWallet, firstname, lastname, gender, age, register_via);
+
             return null;
         }
 

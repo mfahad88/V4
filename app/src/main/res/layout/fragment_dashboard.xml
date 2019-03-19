@@ -294,6 +294,15 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
+                      <!--  <ImageView
+                            android:id="@+id/btn_refer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.6"
+                            android:layout_marginRight="30dp"
+                            android:background="@drawable/btn_build_team" />-->
+
                         <ImageView
                             android:id="@+id/btn_create"
                             android:layout_width="0dp"

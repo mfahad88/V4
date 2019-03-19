@@ -102,7 +102,7 @@ public class Dashboard extends Fragment {
     TextView tv_team_name_in_slice;
     ProgressBar pb_topPlayers, pb_fixture;
     View mView;
-    ImageView btnCreate;
+    ImageView btnCreate,btn_refer;
     ImageView[] iv_array_pp, iv_array_oc, iv_array_gg, iv_array_ip, iv_array_ts, iv_array_ps;
     TextView rank_field;
     int match_time = 29;
@@ -111,7 +111,7 @@ public class Dashboard extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mView = view;
         try {
             dbHandler = new DatabaseHandler(getActivity());
@@ -126,6 +126,7 @@ public class Dashboard extends Fragment {
             tv_team_name_in_slice = (TextView) view.findViewById(R.id.tv_name);
             btnCreate = (ImageView) view.findViewById(R.id.btn_create);
             tv_team_name = (TextView) view.findViewById(R.id.tv_cur_lineup_username);
+//            btn_refer = view.findViewById(R.id.btn_refer);
             getAllImagesArray(view);
 
             pb_fixture = (ProgressBar) view.findViewById(R.id.progressBar_fixtures);
@@ -170,6 +171,17 @@ public class Dashboard extends Fragment {
                     getAlert("inner");
                 }
             });
+          /*  btn_refer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment fragment=new InviteFriendFragment();
+                    //Config.prevFragment=new Dashboard();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_frame, fragment);
+                    ft.commit();
+
+                }
+            });*/
 
             if (player_list_size == 0) {
                 btnCreate.setBackground(getResources().getDrawable(R.drawable.btn_build_team));
