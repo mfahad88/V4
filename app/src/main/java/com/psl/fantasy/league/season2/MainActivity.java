@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             R.drawable.drawer_prizes,//12
             R.drawable.drawer_contact_us,//12
             R.drawable.drawer_gold_finance,
-            R.drawable.refer,
+            R.drawable.drawable_agent,
             R.drawable.drawer_logout // logout//13
 
     };
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     String[] mCount = new String[]{
             "", "", "", "", "",
-            "", "", "", "", "", "", "",""};
+            "", "", "", "", "", "", "","",""};
 
     ////////////////////////////
 
@@ -664,7 +664,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragment = new GoldFinanceFragment();
                         break;
                     case 12:
-                        fragment = new InviteFriendFragment();
+//                        fragment = new InviteFriendFragment();
+                        fragment = new AgentLocator();
                         break;
                     case 13:
                         getAlert("Are you sure you want to log out?");
@@ -751,7 +752,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
                 if (checkedId == R.id.iv_agentlocator) {
-                    selectedFragment = new AgentLocator();
+                    //selectedFragment = new AgentLocator();
+                    selectedFragment = new InviteFriendFragment();
                 }
                 //Debug.waitForDebugger();
                 //if (selectedFragment != null && Config.GLOBAL_VAR.equals("")) {

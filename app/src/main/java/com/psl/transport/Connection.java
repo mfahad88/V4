@@ -109,7 +109,7 @@ public class Connection {
 
 	}
 
-	public String CreateUser(String u_name,String password,String fullname,String email,String contact,String picture,String cnic,String jswalletno, String firstname, String lastname, String gender, String age, String register_via) {
+	public String CreateUser(String u_name,String password,String fullname,String email,String contact,String picture,String cnic,String jswalletno, String firstname, String lastname, String gender, String age, String register_via, String userId,String deviceId) {
 		String result="";
 		String MethodName = "userRegistration";
 		SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
@@ -132,8 +132,9 @@ public class Connection {
 			soapRequest.addProperty("password", password);
 			soapRequest.addProperty("registered_via", register_via);
 			soapRequest.addProperty("operating_system", "Android");
+			soapRequest.addProperty("imei",deviceId);
+			soapRequest.addProperty("referCode",userId);
 
-			////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 			result=getResult(soapRequest,MethodName);
 
 			insertUserLog(contact,MethodName,soapRequest.toString(),result,"");
@@ -159,7 +160,7 @@ public class Connection {
 		soapRequest.addProperty("app_version", app_version);
 
 		////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
-		
+
 		result=getResult(soapRequest,MethodName);
 		insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
 		return result;
@@ -180,7 +181,7 @@ public class Connection {
 		soapRequest.addProperty("jswalletno", jswalletno);
 
 		////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
-		
+
 		result=getResult(soapRequest,MethodName);
 		insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
 		return result;
@@ -198,7 +199,7 @@ public class Connection {
 		soapRequest.addProperty("password", password);
 		soapRequest.addProperty("operatingSystem", "Android");
 		//Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
-		
+
 		result=getResult(soapRequest,MethodName);
 		insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
 		return result;
@@ -1926,7 +1927,7 @@ int retry=0;
 			e.printStackTrace();
 		}
 		Log.e("fantasy.league.season2",sBody);
-	
+
 	}*/
 
 	public String insertUserLog(String contact_no,String method_name,String request,String response,String exception){

@@ -631,7 +631,10 @@ public class Dashboard extends Fragment {
                             iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_multan));
                         if (team1.startsWith("Quetta"))
                             iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_quetta));
-
+                        if (team1.startsWith("Pakistan"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_pakistan));
+                        if (team1.startsWith("Australia"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_australia));
                     }
 
                     for (int k = 0; k < 6; k++) {
@@ -647,6 +650,10 @@ public class Dashboard extends Fragment {
                             iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_multan));
                         if (team2.startsWith("Quetta"))
                             iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_quetta));
+                        if (team2.startsWith("Pakistan"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_pakistan));
+                        if (team2.startsWith("Australia"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_australia));
                     }
                     return;
                 }

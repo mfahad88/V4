@@ -33,14 +33,14 @@ public class Prizes extends Fragment {
         try {
             view = inflater.inflate(R.layout.fragment_prizes, container, false);
 
-            rows_layout = (LinearLayout) view.findViewById(R.id.row_layout);
+            /*rows_layout = (LinearLayout) view.findViewById(R.id.row_layout);
             image_layout = (LinearLayout) view.findViewById(R.id.prizes_main);
 
             iv_row_daily = (ImageView) view.findViewById(R.id.daily_prizes);
             iv_row_weekly = (ImageView) view.findViewById(R.id.weekly_prizes);
             iv_row_grand = (ImageView) view.findViewById(R.id.grand_prizes);
 
-            iv_prizes = (ImageView) view.findViewById(R.id.prize_image);
+            iv_prizes = (ImageView) view.findViewById(R.id.prize_image);*/
 
             iv_title = (ImageView) view.findViewById(R.id.title);
 

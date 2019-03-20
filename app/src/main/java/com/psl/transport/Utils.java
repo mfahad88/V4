@@ -28,7 +28,7 @@ public class Utils {
     private static String publicKeyString = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDZxrO5S1zu2ScQjoUxownWXXqJeH+iUBqAmZGP0/oA1o0LOer4t4vfoJjFG5r3KPLDDvhBUfRwdmpXz8ooVRINKPgw7O/WPOzL6UIyjQou6XEec1H5vm4Ku9B0Gz9ImeNFuGePw5Z6CraudTh5lkABiSrhoobPUYN+xklEHayhGQIDAQAB";
 
     @SuppressLint("NewApi")
-    public static String[] dothis (String text) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
+    public static String dothis (String text) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
 
             Base64.Encoder encoder = Base64.getEncoder();
             // 1. generate secret key using AES
@@ -50,7 +50,7 @@ public class Utils {
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, new IvParameterSpec(new byte[16]));
             String envolpe = Base64.getEncoder().encodeToString(cipher.doFinal(text.getBytes(Charset.forName("UTF-8"))));
             //System.out.println("cipherTextString: "+cipherTextString);
-            byte[] a= alpha(encoder.encodeToString(secretKey.getEncoded()));
+           /* byte[] a= alpha(encoder.encodeToString(secretKey.getEncoded()));
             // 4. get public key
             X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyString));
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -64,7 +64,8 @@ public class Utils {
 
         String[] abc=new String[2];
         abc[0]=envolpe;abc[1]=delta;
-        return abc;
+        return abc;*/
+           return  envolpe;
             // 7. pass cipherTextString (encypted sensitive data) and encryptedSecretKey to your server via your preferred way.
             // Tips:
             // You may use JSON to combine both the strings under 1 object.

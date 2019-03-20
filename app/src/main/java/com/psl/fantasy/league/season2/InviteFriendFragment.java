@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -32,7 +33,7 @@ public class InviteFriendFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_invite_friend, container, false);
-        ImageView share_img=view.findViewById(R.id.fab);
+        Button share_img=view.findViewById(R.id.fab);
         final EditText edt_user=view.findViewById(R.id.edt_userId);
         SharedPreferences preferences= view.getContext().getSharedPreferences(Config.SHARED_PREF, MODE_PRIVATE);
         edt_user.setText(preferences.getString(Config.USER_ID,""));
@@ -41,7 +42,8 @@ public class InviteFriendFragment extends Fragment {
             public void onClick(View v) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Invite your fnf by sharing this refer code ("+edt_user.getText().toString()+")");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Let's play together, click https://play.google.com/store/apps/details?id=com.psl.fantasy.league&hl=en to download the app. Use My invite code" +
+                        "("+edt_user.getText().toString()+") to get rupees 100 inventory as joining bonus for both! Let's test our cricketing skills");
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
 

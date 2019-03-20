@@ -94,6 +94,7 @@
                 android:layout_marginLeft="4dp"
                 android:background="@drawable/vs_icon" />
 
+
             <ImageView
                 android:id="@+id/team_two"
                 android:layout_width="wrap_content"
@@ -153,11 +154,11 @@
         android:layout_marginTop="-7dp"
         android:background="@drawable/teams_bg"
         android:orientation="horizontal"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:weightSum="6">
+        android:paddingLeft="120dp"
+        android:paddingRight="120dp"
+        >
 
-        <RadioButton
+        <!--<RadioButton
             android:id="@+id/iv_isb"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -216,7 +217,34 @@
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:background="@null"
-            android:button="@drawable/quetta_selector" />
+            android:button="@drawable/quetta_selector" />-->
+
+        <RadioButton
+            android:id="@+id/iv_pakistan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            android:layout_marginRight="3dp"
+            android:button="@drawable/pakistan_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VS"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:background="@null"/>
+        <RadioButton
+            android:id="@+id/iv_australia"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="3dp"
+            android:background="@null"
+            android:button="@drawable/australia_selector" />
 
     </RadioGroup>
 

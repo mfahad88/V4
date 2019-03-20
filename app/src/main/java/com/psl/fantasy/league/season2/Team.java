@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -93,7 +94,7 @@ public class Team extends Fragment {
     long tempPoints;
     FileOutputStream fileOutputStream;
     //ImageView iv_tick;
-    String spinner_row_id = "1001";
+    String spinner_row_id = "1008";
     String team_id;
     int swap_count;
     boolean IS_EDITING = false;
@@ -300,7 +301,7 @@ public class Team extends Fragment {
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (checkedId == R.id.iv_isb) {
+                    /*if (checkedId == R.id.iv_isb) {
                         spinner_row_id = "1001";
                     }
                     if (checkedId == R.id.iv_karchi) {
@@ -317,6 +318,12 @@ public class Team extends Fragment {
                     }
                     if (checkedId == R.id.iv_quetta) {
                         spinner_row_id = "1006";
+                    }*/
+                    if(checkedId==R.id.iv_pakistan){
+                        spinner_row_id = "1008";
+                    }
+                    if(checkedId==R.id.iv_australia){
+                        spinner_row_id = "1009";
                     }
                     displayList(spinner_row_id);
                 }
@@ -798,7 +805,7 @@ public class Team extends Fragment {
                 if (selectedPlayerList == null || selectedPlayerList.size() == 0) {
                     new GetUserFantasyTeam().execute();
                 } else {
-                    displayList("1001");
+                    displayList("1008");
                     scrollViewPlayers.setVisibility(View.VISIBLE);
                     try {
                         setDefaultFormation();
@@ -866,7 +873,7 @@ public class Team extends Fragment {
                     if (argument != null && !argument.equals("")) {
 
                         selectedPlayerList = dbHandler.getSelectedPlayers();
-                        displayList("1001");
+                        displayList("1008");
                         new GetInventoryCount().execute();
                     } else {
                         new GetPlayersAsync().execute();
@@ -921,7 +928,7 @@ public class Team extends Fragment {
             try {
                 dbHandler.saveSelectedPlayers(selectedPlayerList);
                 IS_EDITING = false;// Changed after masla
-                displayList("1001");
+                displayList("1008");
                 scrollViewPlayers.setVisibility(View.VISIBLE);
 
                 try {
@@ -1434,7 +1441,8 @@ public class Team extends Fragment {
     void callMethod(int tag, ImageView iv_tick) {
 
         try {
-            tempPoints = userPoints - Long.parseLong(playersList.get(tag).getPrice());
+            tempPoints = userPoints - Long.parseLong(playersList.get(tag).getPrice().trim());
+            Log.e("POints",String.valueOf(tempPoints));
             if (tempPoints < 0) {
                 //Toast.makeText(getActivity(), "You can't select this player in remaining budget", Toast.LENGTH_SHORT).show();
                 Config.getAlert(getActivity(), "You can't select this player in remaining budget");
@@ -1442,7 +1450,7 @@ public class Team extends Fragment {
                 return;
             }
             selectedPlayerList.add(playersList.get(tag));
-            userPoints = userPoints - Long.parseLong(playersList.get(tag).getPrice());
+            userPoints = userPoints - Long.parseLong(playersList.get(tag).getPrice().trim());
 
             if (IS_EDITING)
                 swap_count--;
@@ -1451,7 +1459,7 @@ public class Team extends Fragment {
             iv_tick.setVisibility(View.VISIBLE);
             for (int j = 0; j < selectedPlayerList.size(); j++) {
                 tv_nameArray[j].setText(selectedPlayerList.get(j).getPlayer_name());
-                tv_priceArray[j].setText(selectedPlayerList.get(j).getPrice() + Config.getTeamName(selectedPlayerList.get(j).getTeam_id()));
+                tv_priceArray[j].setText(selectedPlayerList.get(j).getPrice().trim() + Config.getTeamName(selectedPlayerList.get(j).getTeam_id()));
 
                 if(selectedPlayerList.get(j).getRole().equalsIgnoreCase("All Rounder"))
                     tv_nameArray[j].setCompoundDrawablesWithIntrinsicBounds( R.drawable.allrounder_field_icon, 0, 0, 0);
@@ -2895,7 +2903,10 @@ public class Team extends Fragment {
                             iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_multan_small));
                         if (team1.startsWith("Quetta"))
                             iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_quetta_small));
-
+                        if (team1.startsWith("Pakistan"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_pakistan_small));
+                        if (team1.startsWith("Australia"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_australia_small));
                     }
 
                     for (int k = 0; k < 6; k++) {
@@ -2911,6 +2922,10 @@ public class Team extends Fragment {
                             iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_multan_small));
                         if (team2.startsWith("Quetta"))
                             iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_quetta_small));
+                        if (team2.startsWith("Pakistan"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_pakistan_small));
+                        if (team2.startsWith("Australia"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_australia_small));
                     }
                     return minutes_difference;
                 }

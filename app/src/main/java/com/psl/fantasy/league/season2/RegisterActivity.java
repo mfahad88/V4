@@ -29,6 +29,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -177,10 +178,11 @@ public class RegisterActivity extends AppCompatActivity {
     TextView password_strengthTxt;
     String password_strength_check = "Weak";
     GoogleSignInClient mGoogleSignInClient;
-
+    TelephonyManager tm;
     Pattern pattern;
     Account[] account;
     String[] StringArray;
+    String deviceId;
     public static final int RequestPermissionCode = 1;
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -248,7 +250,8 @@ public class RegisterActivity extends AppCompatActivity {
         btn_registeration_end = (Button) findViewById(R.id.btnRegister_new);
         txtFbLogin=findViewById(R.id.login_button);
         //callbackManager = CallbackManager.Factory.create();
-
+        tm = (TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        deviceId=tm.getDeviceId();
 
 
 //        mAuth = FirebaseAuth.getInstance();
@@ -630,8 +633,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     void newMemberSignUP() {
         if(validateEmail(et_email.getText().toString())) {
-
-            new CustomAsyncTask().execute();
+            if(cellNumber.length()==11) {
+                new CustomAsyncTask().execute();
+            }
         }else{
             showAlert("Please enter email");
         }
@@ -643,12 +647,13 @@ public class RegisterActivity extends AppCompatActivity {
         ProgressDialog pd;
         String result;
 
+        String referId;
         @Override
         protected Void doInBackground(Void... params) {
             Connection conn = new Connection(RegisterActivity.this);
-            if(!TextUtils.isEmpty(edt_referral.getText())){
-                result = conn.CreateUser(email, pwd, name, email, cellNumber, encoded_image, cnic, jsWallet, firstname, lastname, gender, age, register_via);
-            }
+
+            result = conn.CreateUser(email, pwd, name, email, cellNumber, encoded_image, cnic, jsWallet, firstname, lastname, gender, age, register_via,referId,deviceId);
+
 
             return null;
         }
@@ -665,11 +670,18 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     if (result.contains("You have been registered successfully")) {
                         showAlert2(result, "Success");
-                    } else if (/*result.toUpperCase().contains("ALREADY_MEMBER") ||*/
+                    }
+                    if(result.contains("Refer Code Already used")) {
+                        showAlert2("Refer code is already used", "Error");
+                    }
+                    if(result.contains("Invalid Refer Code")) {
+                        showAlert2("Invalid invite code", "Error");
+                    }if (/*result.toUpperCase().contains("ALREADY_MEMBER") ||*/
                             result.endsWith("already_member"))
                         showAlert2("The Phone number is already registered.", "Alert");
-                    else
+                    /*else {
                         showAlert2("Error", "Error");
+                    }*/
 
                 } catch (Exception e) {
                     showAlert2("Request not completed", "Error");
@@ -679,10 +691,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
+        @SuppressLint("MissingPermission")
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
             super.onPreExecute();
+
+            referId=edt_referral.getText().toString();
             pd = new ProgressDialog(RegisterActivity.this);
             pd.setTitle("Requesting");
             pd.setMessage("Please wait....");
