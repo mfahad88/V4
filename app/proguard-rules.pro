@@ -47,4 +47,37 @@
 #-dontwarn okio.**
 #-dontwarn retrofit.**
 
+#-ignorewarnings
+-dontwarn org.kobjects.**
+-dontwarn org.ksoap2.**
+-dontwarn org.kxml2.**
+-dontwarn org.xmlpull.v1.**
 
+-keep class org.kobjects.** { *; }
+-keep class org.ksoap2.** { *; }
+-keep class org.kxml2.** { *; }
+-keep class org.xmlpull.** { *; }
+
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontoptimize
+-dontpreverify
+
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *; }
+-keep interface com.squareup.okhttp3.** { *; }
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+
+-keep class org.bouncycastle.** { *; }
+-keepnames class org.bouncycastle.** { *; }
+-dontwarn org.bouncycastle.**
+
+-keep class org.opencv.**{*;}
+-keepnames class org.opencv.**{*;}
+-dontwarn org.opencv.**
+
+-keep class retrofit2.**{*;}
+-keepnames class retrofit2.**{*;}
+-dontwarn retrofit2.**

@@ -69,18 +69,20 @@
                 android:paddingLeft="20dp"
                 android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/edt_city"
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:completionThreshold="1"
+                android:singleLine="true"
+                android:ems="10"
+                android:paddingLeft="20dp"
+                android:textSize="12sp"
                 android:layout_marginTop="-8dp"
                 android:background="@drawable/bg_field"
-                android:clickable="false"
-                android:hint="City"
-                android:inputType="text"
-                android:maxLength="20"
-                android:paddingLeft="20dp"
-                android:textSize="12sp" />
+                android:hint="Select City" />
+
 
             <EditText
                 android:id="@+id/txt_email"
@@ -102,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:paddingTop="35dp"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:textSize="12sp"

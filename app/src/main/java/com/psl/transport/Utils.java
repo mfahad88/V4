@@ -1,18 +1,19 @@
 package com.psl.transport;
 
 import android.annotation.SuppressLint;
+import android.util.Base64;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
+//import java.util.Base64;
 
 import java.nio.charset.Charset;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
+
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -27,10 +28,10 @@ public class Utils {
 
     private static String publicKeyString = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDZxrO5S1zu2ScQjoUxownWXXqJeH+iUBqAmZGP0/oA1o0LOer4t4vfoJjFG5r3KPLDDvhBUfRwdmpXz8ooVRINKPgw7O/WPOzL6UIyjQou6XEec1H5vm4Ku9B0Gz9ImeNFuGePw5Z6CraudTh5lkABiSrhoobPUYN+xklEHayhGQIDAQAB";
 
-    @SuppressLint("NewApi")
+   /* @SuppressLint("NewApi")
     public static String dothis (String text) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
 
-            Base64.Encoder encoder = Base64.getEncoder();
+
             // 1. generate secret key using AES
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(128); // AES is currently available in three key sizes: 128, 192 and 256 bits.The design and strength of all key lengths of the AES algorithm are sufficient to protect classified information up to the SECRET level
@@ -39,18 +40,17 @@ public class Utils {
             //System.out.println("SecretKey: "+encoder.encodeToString(secretKey.getEncoded()));
 
 
-
             // 2. get string which needs to be encrypted
             //String text = "Jhoolay....";
 
             // 3. encrypt string using secret key
-            byte[] raw = secretKey.getEncoded();
+      *//*      byte[] raw = secretKey.getEncoded();
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, new IvParameterSpec(new byte[16]));
             String envolpe = Base64.getEncoder().encodeToString(cipher.doFinal(text.getBytes(Charset.forName("UTF-8"))));
             //System.out.println("cipherTextString: "+cipherTextString);
-           /* byte[] a= alpha(encoder.encodeToString(secretKey.getEncoded()));
+            byte[] a= alpha(encoder.encodeToString(secretKey.getEncoded()));*//*
             // 4. get public key
             X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyString));
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -59,28 +59,43 @@ public class Utils {
             // 6. encrypt secret key using public key
             Cipher cipher2 = Cipher.getInstance("RSA/ECB/OAEPWithSHA1AndMGF1Padding");
             cipher2.init(Cipher.ENCRYPT_MODE, publicKey);
-            String delta = Base64.getEncoder().encodeToString(cipher2.doFinal(a));
-//            System.out.println("encryptedSecretKey: "+encryptedSecretKey);
+            String encryptedSecretKey = Base64.getEncoder().encodeToString(cipher2.doFinal(text.getBytes()));
+           System.out.println("encryptedSecretKey: "+encryptedSecretKey);
 
-        String[] abc=new String[2];
+        *//*String[] abc=new String[2];
         abc[0]=envolpe;abc[1]=delta;
-        return abc;*/
-           return  envolpe;
+       // return abc;*//*
+           return  encryptedSecretKey;
             // 7. pass cipherTextString (encypted sensitive data) and encryptedSecretKey to your server via your preferred way.
             // Tips:
             // You may use JSON to combine both the strings under 1 object.
             // You may use a volley call to send this data to your server.
 
+    }*/
+
+    @SuppressLint("NewApi")
+    public static String amna(SecretKey mariam, String kapoor){
+        String konho = null;
+        try{
+            byte[] raw = mariam.getEncoded();
+            SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, new IvParameterSpec(new byte[16]));
+            konho=  Base64.encodeToString(cipher.doFinal(kapoor.getBytes(Charset.forName("UTF-8"))),Base64.DEFAULT);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  konho;
     }
 
-    public static byte[] alpha(String value) {
+    public static String alpha(String value) {
 
         String dd=value.substring(0, 3);
         String ee=value.substring(value.length()-3, value.length());
         String rem=value.substring(3,value.length()-3);
         rem=ee+rem+dd;
 
-        return rem.getBytes();
+        return rem;
 
     }
 }

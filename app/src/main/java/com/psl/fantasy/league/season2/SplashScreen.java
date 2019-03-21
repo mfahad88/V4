@@ -451,6 +451,79 @@ public class SplashScreen extends Activity {
         }
     }
 
+    private class GetCityAsync extends AsyncTask<String, String, String> {
+        String objResult;
+        ProgressDialog pDialog;
+        String mResult;
+        List<String> list;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                list = dbhandler.getCity();
+                //if (fixruresList.size() == 0) {
+
+                Connection connection = new Connection(SplashScreen.this);
+                mResult = connection.getCityData();
+                list = new ArrayList<String>();
+                if (mResult != null && !mResult.equals("")) {
+                    XMLParser xmp = new XMLParser();
+                    xmp.parse(mResult);
+                    list = xmp.getCityData();
+                }
+                //}
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String aVoid) {
+            super.onPostExecute(aVoid);
+
+            try {
+               // List<String> list = dbhandler.getCity();
+                //if (list == null || list.size() == 0) {
+                dbhandler.deleteAllCity();
+                dbhandler.saveCityName(list);
+
+                // }
+
+
+                /*if (!sharedPreference.getString(Config.EMAIL, "").equals("")) {
+                    startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                    finish();
+                } else {
+                    Intent i = new Intent(SplashScreen.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }*/
+
+                //new GetFixturesAsyncAll().execute();
+                // new GetRuleBook().execute();
+
+                //locationsList = new ArrayList<JsLocationsVO>();
+                // List<JsLocationsVO> loc_list = dbhandler.getJsLocations();
+
+
+
+                /*if (loc_list == null || loc_list.size() == 0)
+                    importDatafromExcel();*/
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     private class GetFixturesAsync extends AsyncTask<String, String, String> {
         String objResult;
         ProgressDialog pDialog;
@@ -614,6 +687,7 @@ public class SplashScreen extends Activity {
             dbhandler = new DatabaseHandler(SplashScreen.this);
 
             //new GetUserFantasyTeam().execute();
+            new GetCityAsync().execute();
             new GetFixturesAsync().execute();
 
         } catch (Exception e) {

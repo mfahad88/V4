@@ -31,6 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 	public static final String TABLE_LeaderBoard_Daily= "tbl_leaderboard_daily";
 	public static final String TABLE_LeaderBoard_overall= "tbl_leaderboard_overall";
 	public static final String TABLE_Transaction_Details= "TABLE_Transaction_Details";
+	public static final String TABLE_CITY= "tbl_city";
 
 
 	private static final String Booster_Type = "booster_type";
@@ -40,6 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
 
 	private static final String ID = "id";
+	private static final String CITY_NAME = "city_name";
 	private static final String Employee_ID = "Emp_Id";
 	private static final String t_id = "t_id";
 	private static final String player_id = "player_id";
@@ -118,6 +120,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 			+ Booster_Type + " TEXT,"
 			+ Booster_Points + " TEXT,"
 			+ Booster_Redeem + " TEXT " + ")";
+
+	private static final String CREATE_TABLE_CITY = "CREATE TABLE "
+			+ TABLE_CITY+" ( "
+			+ CITY_NAME + " TEXT " + ")";
 
 	private static final String CREATE_TABLE_SELTECTED_PLAYERS = "CREATE TABLE "
 			+ TABLE_SELECTED_PLAYERS+" ( "
@@ -267,7 +273,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
 	private static final String CREATE_TABLE_FIXTURES = "CREATE TABLE "
 			+ TABLE_FIXTURES+" ( "
-			+ ID + " INTEGER PRIMARY KEY, "
+			+ ID + " INTEGER PRIMARY KEY,"
 			+ MATCH + " TEXT,"
 			+ MATCH_DATE + " TEXT,"
 			+ VENUE + " TEXT,"
@@ -277,6 +283,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_TABLE_SELTECTED_PLAYERS);
+		db.execSQL(CREATE_TABLE_CITY);
 		db.execSQL(CREATE_TABLE_FIXTURES);
 		//db.execSQL(CREATE_TABLE_JS_LOCATIONS);
 		db.execSQL(CREATE_TABLE_JS_BOOSTERS);
@@ -290,6 +297,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
 
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_SELECTED_PLAYERS);
+				db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITY);
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_FIXTURES);
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY_PLAYERS);
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_JS_Boosters);
@@ -316,6 +324,33 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 					processId = database.insert(TABLE_JS_Boosters, null, values);
 
 				}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(database!=null)
+				if(database.isOpen())
+					database.close();
+		}
+		return processId ;
+	}
+
+	public long saveCityName(List<String> list){
+		long processId = 0  ;
+		SQLiteDatabase database = null;
+		try {
+
+			database = this.getWritableDatabase();
+			ContentValues values = new ContentValues();
+			for(int i=0;i<list.size();i++) {
+				values.put(CITY_NAME, list.get(i));
+
+				processId = database.insert(TABLE_CITY, null, values);
+			}
+
+		}
 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -408,6 +443,34 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 		}
 		return playerList;
 	}
+
+	public List<String> getCity(){
+		List<String> list = new ArrayList<>();
+		Cursor c = null ;
+		try {
+
+			String query = "SELECT * FROM " + TABLE_CITY+"" ;
+
+			SQLiteDatabase db = this.getReadableDatabase();
+			c = db.rawQuery(query, null);
+
+			if (c.moveToFirst()) {
+				do {
+					list.add(c.getString(c.getColumnIndex(CITY_NAME)));
+				} while (c.moveToNext());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			if(c!=null)
+				c.close();
+
+		}
+		return list;
+	}
+
 	public long saveJsLocations(List<JsLocationsVO> data){
 		long processId = 0  ;
 		SQLiteDatabase database = null;
@@ -1066,6 +1129,19 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 		try {
 			SQLiteDatabase db = this.getWritableDatabase();
 			db.execSQL("delete from "+ TABLE_FIXTURES);
+			db.close();
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+
+	public void deleteAllCity()
+	{
+		try {
+			SQLiteDatabase db = this.getWritableDatabase();
+			db.execSQL("delete from "+ TABLE_CITY);
 			db.close();
 		}catch (Exception e)
 		{

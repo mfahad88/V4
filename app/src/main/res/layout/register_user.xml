@@ -211,7 +211,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="150dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/mainlayout"
@@ -346,7 +346,7 @@
                 android:background="@drawable/bg_field"
                 android:ems="10"
                 android:singleLine="true"
-                android:hint="Referral"
+                android:hint="Referral (Optional)"
                 android:inputType="number"
                 android:maxLength="50"
                 android:paddingLeft="20dp"

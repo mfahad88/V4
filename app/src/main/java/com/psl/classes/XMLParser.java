@@ -454,6 +454,36 @@ public class XMLParser {
         return fixtureList;
     }
 
+    public List<String> getCityData() {
+        String result = "";
+        List<String> list = new ArrayList<String>();
+        try {
+            doc.getDocumentElement().normalize();
+            System.out.println("Root element :"
+                    + doc.getDocumentElement().getNodeName());
+            NodeList nList = doc.getElementsByTagName("pk_cities");
+            int length = nList.getLength();
+
+            for (int i = 0; i < length; i++) {
+                Node nNode = nList.item(i);
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+
+                    try {
+                        result = eElement.getElementsByTagName("city_name").item(0).getTextContent();
+
+                    } catch (Exception e) {
+                    }
+                    list.add(result);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public List<JsLocationsVO> getLocationsData() {
         String result = "";
         List<JsLocationsVO> list = new ArrayList<JsLocationsVO>();

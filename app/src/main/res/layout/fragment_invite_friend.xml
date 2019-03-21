@@ -26,6 +26,8 @@
         android:digits="@string/name_digits"
         android:layout_below="@id/header"
         android:hint="Name"
+        android:focusable="false"
+        android:longClickable="false"
         android:inputType="textPersonName"
         android:maxLength="30"
         android:layout_centerHorizontal="true"
