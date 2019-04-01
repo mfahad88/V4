@@ -179,7 +179,6 @@ public class Dashboard extends Fragment {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.content_frame, fragment);
                     ft.commit();
-
                 }
             });*/
 
@@ -216,7 +215,6 @@ public class Dashboard extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
             });*/
 
@@ -412,10 +410,8 @@ public class Dashboard extends Fragment {
 
                     /*long diff = datesDifference("");
                     long post_match_diff = getPostDifference();
-
                     if (post_match_diff == 0)
                         post_match_diff = 31;
-
                     if (diff > match_time && post_match_diff > post_match_time) {*/
                     if (sharedPreference.getString(Config.TEAM_NAME, "").equalsIgnoreCase("")) {
                         getAlert("");
@@ -482,11 +478,9 @@ public class Dashboard extends Fragment {
         edittext.setText(sharedPreference.getString(Config.TEAM_NAME, ""));
 
        /* edittext.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                *//*if(charSequence.equals(""))
@@ -496,7 +490,6 @@ public class Dashboard extends Fragment {
                    //edittext.setText(edittext.getText().toString().replace("!","").replace("'", "").replace("`","").replace("%","").replace("$","").replace(";","").replace(",",""));
               //  }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 edittext.setText(edittext.getText().toString().replace("!","").replace("'", "").replace("`","").replace("%","").replace("$","").replace(";","").replace(",",""));
@@ -591,7 +584,7 @@ public class Dashboard extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //you can set the title for your toolbar here for different fragments different titles 
+        //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Menu 1");
     }
 
@@ -618,8 +611,19 @@ public class Dashboard extends Fragment {
                     fixturesTeam = fixturesList.get(i).getMatch();
                     String team1 = fixturesTeam.split("VS")[0].trim();
                     String team2 = fixturesTeam.split("VS")[1].trim();
-                    for (int k = 0; k < 6; k++) {
-                        if (team1.startsWith("Islamabad"))
+                    for (int k = 0; k < 5; k++) {
+                        if(team1.startsWith("Punjab"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_punjab));
+                        if(team1.startsWith("Balochistan"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_balo));
+                        if(team1.startsWith("Federal Areas"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_fed));
+                        if(team1.startsWith("Khyber Pakhtunkhwa"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_kpk));
+                        if(team1.startsWith("Sindh"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_sindh));
+
+                        /*if (team1.startsWith("Islamabad"))
                             iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_islamabad));
                         if (team1.startsWith("Karachi"))
                             iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_karachi));
@@ -634,11 +638,22 @@ public class Dashboard extends Fragment {
                         if (team1.startsWith("Pakistan"))
                             iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_pakistan));
                         if (team1.startsWith("Australia"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_australia));
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_australia));*/
                     }
 
-                    for (int k = 0; k < 6; k++) {
-                        if (team2.startsWith("Islamabad"))
+                    for (int k = 0; k < 5; k++) {
+
+                        if(team2.startsWith("Punjab"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_punjab));
+                        if(team2.startsWith("Balochistan"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_balo));
+                        if(team2.startsWith("Federal Areas"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_fed));
+                        if(team2.startsWith("Khyber Pakhtunkhwa"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_kpk));
+                        if(team2.startsWith("Sindh"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_sindh));
+                       /* if (team2.startsWith("Islamabad"))
                             iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_islamabad));
                         if (team2.startsWith("Karachi"))
                             iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_karachi));
@@ -653,7 +668,7 @@ public class Dashboard extends Fragment {
                         if (team2.startsWith("Pakistan"))
                             iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_pakistan));
                         if (team2.startsWith("Australia"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_australia));
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_australia));*/
                     }
                     return;
                 }
@@ -948,7 +963,6 @@ public class Dashboard extends Fragment {
                 /*if(dbHandler.getLeaderBoardDaily().size()>0){
                     boolean is_modified=dbHandler.getLeaderBoardDaily().get(0).getDate().after(addHoursToJavaUtilDate(dbHandler.getLeaderBoardDaily().get(0).getDate(),4));
                     if(is_modified) {
-
                         Connection connection = new Connection(getActivity());
                         mResult = connection.getLeaderboardPositions(params[0], params[1]);
                         set_or_not = params[0];
@@ -962,7 +976,6 @@ public class Dashboard extends Fragment {
                             }else {
                                 dbHandler.saveLeaderBoardOverall(leaderData);
                             }
-
                         }
                     }else{
                         if (set_or_not.equalsIgnoreCase("today")) {
@@ -985,7 +998,6 @@ public class Dashboard extends Fragment {
                         }else {
                             dbHandler.saveLeaderBoardOverall(leaderData);
                         }
-
                     }
                     if (set_or_not.equalsIgnoreCase("today")) {
                         list= dbHandler.getLeaderBoardDaily();
@@ -1121,7 +1133,6 @@ public class Dashboard extends Fragment {
                 new GetFixturesAsync().execute();
             } catch (Exception e) {
                 e.printStackTrace();
-
             }*/
         }
 
@@ -1440,27 +1451,22 @@ public class Dashboard extends Fragment {
     }
 
    /* private static final int REQUEST_WRITE_STORAGE = 990;
-
     public boolean checkWritePermission() {
         boolean bool = false;
         try {
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
             } else {
                 //TakeScreenshot(mView);
-
                 captureScreen();
                 initShareIntent("text", "https://play.google.com/store/apps/details?id=com.psl.fantasy.league #ACL");
                // openFilePicker();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return bool;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_WRITE_STORAGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -1563,7 +1569,6 @@ public class Dashboard extends Fragment {
                 Log.v(TAG,"Permission is granted1");
                 return true;
             } else {
-
                 Log.v(TAG,"Permission is revoked1");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
                 return false;
@@ -1574,7 +1579,6 @@ public class Dashboard extends Fragment {
             return true;
         }
     }
-
     public  boolean isWriteStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -1582,7 +1586,6 @@ public class Dashboard extends Fragment {
                 Log.v(TAG,"Permission is granted2");
                 return true;
             } else {
-
                 Log.v(TAG,"Permission is revoked2");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
                 return false;

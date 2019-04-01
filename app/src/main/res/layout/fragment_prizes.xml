@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_dashboard">
 
     <View
@@ -16,108 +16,64 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/title_prizes"
         android:visibility="visible" />
 
-
-    <ScrollView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_header"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="25dp"
+        android:fontFamily="@font/montserratblack"
+        android:textSize="20sp"
+        android:layout_below="@id/title"/>
+    <LinearLayout
+        android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_header"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="2">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/cash_prizes"/>
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/bg_rounded"
-            android:layout_margin="10dp">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Position"
+            android:fontFamily="@font/montserratblack"
+            android:textColor="@color/lv_fix_row_title_color"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/row_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                android:visibility="visible">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Value"
+            android:fontFamily="@font/montserratblack"
+            android:textColor="@color/lv_fix_row_title_color"
+            android:textStyle="bold" />
 
+    </LinearLayout>
+    <ListView
+        android:id="@+id/lv_prizes"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_alignLeft="@id/helmet_layout_2"
+        android:layout_alignRight="@id/helmet_layout_2"
+        android:layout_below="@id/title_layout"
+        android:visibility="gone"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:divider="@null"
+        android:dividerHeight="0dp">
 
-                <ImageView
-                    android:id="@+id/grand_prizes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/iv_grand" />
+    </ListView>
 
-                <ImageView
-                    android:id="@+id/weekly_prizes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/iv_weekly" />
-
-                <ImageView
-                    android:id="@+id/daily_prizes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/iv_daily" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/prizes_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="5dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/prize_image"
-                    android:layout_width="300dp"
-                    android:layout_height="700dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/grand" />
-
-                &lt;!&ndash; <ImageView
-                     android:id="@+id/prize_image2"
-                     android:layout_width="300dp"
-                     android:layout_height="200dp"
-                     android:layout_gravity="center_horizontal"
-                     android:layout_marginTop="5dp"
-                     android:background="@drawable/samsung"/>
-                 <ImageView
-                     android:id="@+id/prize_image3"
-                     android:layout_width="300dp"
-                     android:layout_height="200dp"
-                     android:layout_gravity="center_horizontal"
-                     android:layout_marginTop="5dp"
-                     android:background="@drawable/led"/>&ndash;&gt;
-                <Button
-                    android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/btn_bg_medium"
-                    android:text="Back"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-        </LinearLayout>-->
-
-    </ScrollView>
 
 </RelativeLayout>

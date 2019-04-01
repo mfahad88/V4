@@ -33,6 +33,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
 import com.psl.fantasy.league.season2.R;;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -85,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
     private LoginManager mLoginManager;
     private AccessTokenTracker mAccessTokenTracker;
     private boolean loggedin;
+
+
     String register_via = "";
 
     TextView tv_forgotPin;
@@ -162,6 +166,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         sharedPreferences = getSharedPreferences(Config.SHARED_PREF, MODE_PRIVATE);
+
+
+
         if (Config.w0.equals("")) {
             startActivity(new Intent(LoginActivity.this, SplashScreen.class));
             return;
@@ -169,6 +176,11 @@ public class LoginActivity extends AppCompatActivity {
         //FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         setContentView(R.layout.activity_login);
+
+
+
+
+
 
         try {
             // int res=compareVersionNames("1.8.4","1.8.3");

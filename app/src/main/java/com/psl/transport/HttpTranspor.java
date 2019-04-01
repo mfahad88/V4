@@ -1,5 +1,7 @@
 package com.psl.transport;
 
+import android.util.Log;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.transport.ServiceConnection;
 import org.ksoap2.transport.Transport;
@@ -43,6 +45,7 @@ public class HttpTranspor extends Transport
         connection.setRequestProperty("delta",delta);
         connection.setRequestMethod("POST");
         connection.connect();
+
         OutputStream os = connection.openOutputStream();
         os.write(requestData, 0, requestData.length);
         os.flush();

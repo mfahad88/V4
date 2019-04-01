@@ -169,18 +169,7 @@ public class Connection {
         return result;
     }
 
-    public String getCity() {
-        String result="";
 
-        String MethodName = "get_All_cities";
-        SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
-
-        ////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
-
-        result=getResult(soapRequest,MethodName);
-        insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
-        return result;
-    }
 
     public String UpdateUserProfile(String u_name,String fullname,String contact,String picture,String cnic,String jswalletno) {
         String result="";
@@ -196,6 +185,22 @@ public class Connection {
         soapRequest.addProperty("cnic", cnic);
         soapRequest.addProperty("picurl", picture);
         soapRequest.addProperty("jswalletno", jswalletno);
+
+        ////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
+
+        result=getResult(soapRequest,MethodName);
+        insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
+        return result;
+    }
+
+    public String getPrizes() {
+        String result="";
+
+        String MethodName = "get_Prize";
+        SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
+        soapRequest.addProperty("w_username", w_username);
+        soapRequest.addProperty("w_password", w_password);
+
 
         ////Log.i(TAG,soapRequest.getName()+"------>"+soapRequest.toString());
 
@@ -858,7 +863,7 @@ public class Connection {
                     List<Transaction_Details> transaction_detail =
                             prepareTransListPurchaseItem(jsonObj.getString("transactionId"),mobile_no,userID,strJSONBody,res.replace("-1",""),"SUCCESS");
                     String test=UpdateTransactionNew(transaction_detail);
-                    insertUserLog(mobile_no,"ep payment",strJSONBody,res,"");
+                    insertUserLog(mobile_no,"ep payment",strJSONBody,res,"",transactionAmount,jsonObj.getString("transactionId"),jsonObj.getString("responseCode"));
 
                     return res;
                 }else{
@@ -1259,7 +1264,11 @@ public class Connection {
             envelope.addMapping(NameSpace, "Transaction_Details", transaction_detail.getClass());
             //Log.i(TAG,soapDetails.getName()+"------>"+soapDetails.toString());
 
-            if(URL.startsWith("https"))
+            HttpTransportSE HttpTransportSE = new HttpTransportSE(URL);
+            HttpTransportSE.debug = true ;
+            HttpTransportSE.call(NameSpace + MethodName, envelope);
+            result = envelope.getResponse().toString();
+            /*if(URL.startsWith("https"))
             {
                 HttpsTransporSE HttpTransportSE = new HttpsTransporSE(URL, 0, "", 120000);
                 HttpTransportSE.debug = true ;
@@ -1273,7 +1282,7 @@ public class Connection {
                 result = envelope.getResponse().toString();
 
 
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
             //if(e.getClass().equals(new ConnectException().getClass()) || (e.getClass().equals(new UnknownHostException())) || e.getClass().equals(new SocketTimeoutException().getClass())
@@ -1650,8 +1659,12 @@ public class Connection {
             envelope.setOutputSoapObject(soapAddRequest);
             envelope.addMapping(NameSpace, "PlayerAttributes", player.getClass());
 
-
-            if(URL.startsWith("https"))
+            HttpTransportSE HttpTransportSE = new HttpTransportSE(URL);
+            HttpTransportSE.debug = true ;
+            HttpTransportSE.call(NameSpace + MethodName, envelope);
+            result = envelope.getResponse().toString();
+            insertUserLog(mobile_no,MethodName,HttpTransportSE.requestDump,HttpTransportSE.responseDump,"");
+         /*   if(URL.startsWith("https"))
             {
                 HttpsTransporSE HttpTransportSE = new HttpsTransporSE(URL, 0, "", 30000);
                 HttpTransportSE.debug = true ;
@@ -1668,7 +1681,7 @@ public class Connection {
                 HttpTransportSE.call(NameSpace + MethodName, envelope);
                 result = envelope.getResponse().toString();
                 insertUserLog(mobile_no,MethodName,HttpTransportSE.requestDump,HttpTransportSE.responseDump,"");
-            }
+            }*/
         } catch (Exception e) {
             Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
@@ -1759,8 +1772,12 @@ public class Connection {
         envelope.dotNet = true;
         envelope.setOutputSoapObject(soapRequest);
         try{
+            HttpTransportSE HttpTransportSE = new HttpTransportSE(URL, 30000);
+            HttpTransportSE.debug = true ;
+            HttpTransportSE.call(NameSpace + MethodName, envelope);
+            result = envelope.getResponse().toString();
 
-            if(URL.startsWith("https"))
+            /*if(URL.startsWith("https"))
             {
                 HttpsTransporSE HttpTransportSE = new HttpsTransporSE(URL, 0, "", 30000);
                 HttpTransportSE.debug = true ;
@@ -1775,7 +1792,7 @@ public class Connection {
                 HttpTransportSE.call(NameSpace + MethodName, envelope);
                 result = envelope.getResponse().toString();
 
-            }
+            }*/
             //insertUserLog(mobile_no,MethodName,soapRequest.toString(),result,"");
         } catch (Exception e) {
             e.printStackTrace();
@@ -1810,7 +1827,12 @@ public class Connection {
         try {
             envelop.setOutputSoapObject(object);
             //mobile_no=envelop.bodyOut.toString().substring(envelop.bodyOut.toString().lastIndexOf("mobile")+7,envelop.bodyOut.toString().lastIndexOf("mobile")+18);
-            if(URL.startsWith("https"))
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL) ; //for Local
+            androidHttpTransport.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            androidHttpTransport.debug=true;
+            androidHttpTransport.call( Soap_Action, envelop);
+
+           /* if(URL.startsWith("https"))
             {
                 HttpsTransporSE androidHttpTransport = new HttpsTransporSE(URL, 0, "", 30000);
                 androidHttpTransport.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
@@ -1827,7 +1849,7 @@ public class Connection {
                 androidHttpTransport.call( Soap_Action, envelop);
 
 
-            }
+            }*/
             result=(SoapObject)envelop.bodyIn;
 
         }
@@ -1845,8 +1867,11 @@ public class Connection {
         envelope.dotNet = true;
         envelope.setOutputSoapObject(soapRequest);
         try{
-
-            if(URL2.startsWith("https"))
+            HttpTransportSE HttpTransportSE = new HttpTransportSE(URL2);
+            HttpTransportSE.debug = true ;
+            HttpTransportSE.call(NameSpace + MethodName, envelope);
+            result = envelope.getResponse().toString();
+            /*if(URL2.startsWith("https"))
             {
                 HttpsTransporSE HttpTransportSE = new HttpsTransporSE(URL2, 0, "", 30000);
                 //HttpTransportSE.debug = true ;
@@ -1858,7 +1883,7 @@ public class Connection {
                 HttpTransportSE.debug = true ;
                 HttpTransportSE.call(NameSpace + MethodName, envelope);
                 result = envelope.getResponse().toString();
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
             if(e.getClass().equals(new ConnectException().getClass()))
@@ -1971,6 +1996,27 @@ public class Connection {
 		Log.e("fantasy.league.season2",sBody);
 
 	}*/
+
+    public String insertUserLog(String contact_no,String method_name,String request,String response,String exception,String amt,String trx_id,String response_code){
+        String result="";
+        String MethodName="user_log";
+
+        SoapObject soapRequest = new SoapObject(NameSpace, MethodName);
+        soapRequest.addProperty("w_username", Config.w1);
+        soapRequest.addProperty("w_password", Config.w2);
+        soapRequest.addProperty("contact_no",contact_no);
+        soapRequest.addProperty("method_name",method_name);
+        soapRequest.addProperty("request",request);
+        soapRequest.addProperty("response",response);
+        soapRequest.addProperty("exception",exception);
+        soapRequest.addProperty("amt",amt);
+        soapRequest.addProperty("trx_id",trx_id);
+        soapRequest.addProperty("response_code",response_code);
+        if(!contact_no.equalsIgnoreCase("")) {
+            result = getResult(soapRequest, MethodName);
+        }
+        return result;
+    }
 
     public String insertUserLog(String contact_no,String method_name,String request,String response,String exception){
         String result="";

@@ -7,12 +7,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+
+
 import com.psl.fantasy.league.season2.R;;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.psl.classes.*;
 import com.psl.transport.Connection;
@@ -39,10 +44,12 @@ public class FormationTeam extends Fragment {
     String user_id;
     DatabaseHandler dbHandler;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
-        View view = inflater.inflate(R.layout.fragment_formation, container, false);
+        final View view = inflater.inflate(R.layout.fragment_formation, container, false);
         sharedPreferences = getActivity().getSharedPreferences(Config.SHARED_PREF, MODE_PRIVATE);
         ImageView btnLeft = (ImageView) view.findViewById(R.id.iv_left_formation);
         ImageView btnRight = (ImageView) view.findViewById(R.id.iv_right_formation);
@@ -68,7 +75,6 @@ public class FormationTeam extends Fragment {
         user_name.setTypeface(custom_font);
         rank_field.setTypeface(custom_font);
         coins_field.setTypeface(custom_font);
-
 
         try {
             dbHandler = new DatabaseHandler(getActivity());
@@ -160,6 +166,10 @@ public class FormationTeam extends Fragment {
 
         return view;
     }
+
+
+
+
 
 
     private class GetUserFantasyTeam extends AsyncTask<String, String, String> {

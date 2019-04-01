@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +30,9 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.psl.asynctasks.VersionChecker;
 import com.psl.classes.Config;
 import com.psl.classes.DatabaseHandler;
 import com.psl.classes.FixturesVO;
@@ -40,6 +43,7 @@ import com.psl.classes.PlayerProfileVO;
 import com.psl.classes.XMLParser;
 import com.psl.fantasy.league.season2.R;;
 import com.psl.transport.Connection;
+import com.psl.transport.Utils;
 
 import org.ksoap2.serialization.SoapObject;
 
@@ -76,6 +80,7 @@ public class SplashScreen extends Activity {
     String device_information;
     MediaPlayer audioPlayer;
     public static final int MY_PERMISSIONS_REQUEST_STORAGE = 99;
+
     @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +123,53 @@ public class SplashScreen extends Activity {
         } catch (Exception e) {
             Log.e(this.getClass().getName(), "printHashKey()", e);
         }*/
+
+        try {
+            // int res=compareVersionNames("1.8.4","1.8.3");
+
+            VersionChecker versionChecker = new VersionChecker(this);
+            String playStoreVersion = versionChecker.execute().get();
+
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String runningVersion = pInfo.versionName;
+            int res = compareVersionNames(runningVersion, playStoreVersion);
+            if (res < 0) {
+                android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(this);
+                adb.setMessage("New vesrion of application is available on Play Store.");
+                adb.setTitle("Update Application");
+                adb.setCancelable(false);
+                adb.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        } catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        } finally {
+                            finish();
+                        }
+                    }
+                });
+                adb.show();
+
+            }
+            //Toast.makeText(SplashScreen.this,res+"", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             //lx1();
-
-
             callAccessories();
+            /*if(!Utils.checkRoot(this)){
+//                Toast.makeText(this, "Your devices is not rooted", Toast.LENGTH_SHORT).show();
+                callAccessories();
+            } else {
+                finish();
+            }
+*/
+
 
             //loadIMEI();
         } catch (Exception e) {
@@ -183,6 +230,8 @@ public class SplashScreen extends Activity {
         }*/
 
     }
+
+
     private void checkLocationPermission() {
         try {
             if ((ActivityCompat.checkSelfPermission(SplashScreen.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) &&
@@ -479,6 +528,7 @@ public class SplashScreen extends Activity {
                 //}
 
             } catch (Exception e) {
+                Log.e("league.season2",e.getMessage());
                 e.printStackTrace();
             }
             return null;
@@ -754,6 +804,35 @@ public class SplashScreen extends Activity {
         }
     }
 
+    public int compareVersionNames(String oldVersionName, String newVersionName) {
+        int res = 0;
+
+        String[] oldNumbers = oldVersionName.split("\\.");
+        String[] newNumbers = newVersionName.split("\\.");
+
+        // To avoid IndexOutOfBounds
+        int maxIndex = Math.min(oldNumbers.length, newNumbers.length);
+
+        for (int i = 0; i < maxIndex; i++) {
+            int oldVersionPart = Integer.valueOf(oldNumbers[i]);
+            int newVersionPart = Integer.valueOf(newNumbers[i]);
+
+            if (oldVersionPart < newVersionPart) {
+                res = -1;
+                break;
+            } else if (oldVersionPart > newVersionPart) {
+                res = 1;
+                break;
+            }
+        }
+
+        // If versions are the same so far, but they have different length...
+        if (res == 0 && oldNumbers.length != newNumbers.length) {
+            res = (oldNumbers.length > newNumbers.length) ? 1 : -1;
+        }
+
+        return res;
+    }
 
 
 

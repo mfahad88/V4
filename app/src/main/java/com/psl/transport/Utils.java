@@ -1,7 +1,10 @@
 package com.psl.transport;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Base64;
+
+
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -98,4 +101,9 @@ public class Utils {
         return rem;
 
     }
+
+   /* public static boolean checkRoot(Context context){
+        RootBeer rootBeer = new RootBeer(context);
+        return rootBeer.isRooted();
+    }*/
 }

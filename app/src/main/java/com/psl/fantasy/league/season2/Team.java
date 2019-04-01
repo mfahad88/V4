@@ -301,6 +301,21 @@ public class Team extends Fragment {
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    if(checkedId==R.id.iv_bal){
+                        spinner_row_id="1010";
+                    }
+                    if(checkedId==R.id.iv_fed){
+                        spinner_row_id="1011";
+                    }
+                    if(checkedId==R.id.iv_kpk){
+                        spinner_row_id="1012";
+                    }
+                    if(checkedId==R.id.iv_punjab){
+                        spinner_row_id="1013";
+                    }
+                    if(checkedId==R.id.iv_sindh){
+                        spinner_row_id="1014";
+                    }
                     /*if (checkedId == R.id.iv_isb) {
                         spinner_row_id = "1001";
                     }
@@ -319,12 +334,12 @@ public class Team extends Fragment {
                     if (checkedId == R.id.iv_quetta) {
                         spinner_row_id = "1006";
                     }*/
-                    if(checkedId==R.id.iv_pakistan){
+                    /*if(checkedId==R.id.iv_pakistan){
                         spinner_row_id = "1008";
                     }
                     if(checkedId==R.id.iv_australia){
                         spinner_row_id = "1009";
-                    }
+                    }*/
                     displayList(spinner_row_id);
                 }
             });
@@ -805,7 +820,7 @@ public class Team extends Fragment {
                 if (selectedPlayerList == null || selectedPlayerList.size() == 0) {
                     new GetUserFantasyTeam().execute();
                 } else {
-                    displayList("1008");
+                    displayList("1010");
                     scrollViewPlayers.setVisibility(View.VISIBLE);
                     try {
                         setDefaultFormation();
@@ -873,7 +888,7 @@ public class Team extends Fragment {
                     if (argument != null && !argument.equals("")) {
 
                         selectedPlayerList = dbHandler.getSelectedPlayers();
-                        displayList("1008");
+                        displayList("1010");
                         new GetInventoryCount().execute();
                     } else {
                         new GetPlayersAsync().execute();
@@ -928,7 +943,7 @@ public class Team extends Fragment {
             try {
                 dbHandler.saveSelectedPlayers(selectedPlayerList);
                 IS_EDITING = false;// Changed after masla
-                displayList("1008");
+                displayList("1010");
                 scrollViewPlayers.setVisibility(View.VISIBLE);
 
                 try {
@@ -2890,42 +2905,30 @@ public class Team extends Fragment {
                     // long hours = minutes / 60;
                     //long days = hours / 24;
 
-                    for (int k = 0; k < 6; k++) {
-                        if (team1.startsWith("Islamabad"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_islamabad_small));
-                        if (team1.startsWith("Karachi"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_karachi_small));
-                        if (team1.startsWith("Lahore"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_lahore_small));
-                        if (team1.startsWith("Peshawar"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_peshawar_small));
-                        if (team1.startsWith("Multan"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_multan_small));
-                        if (team1.startsWith("Quetta"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_quetta_small));
-                        if (team1.startsWith("Pakistan"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_pakistan_small));
-                        if (team1.startsWith("Australia"))
-                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_australia_small));
+                    for (int k = 0; k < 5; k++) {
+                        if(team1.startsWith("Punjab"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_punjab_small));
+                        if(team1.startsWith("Balochistan"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_balo_small));
+                        if(team1.startsWith("Federal Areas"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_fed_small));
+                        if(team1.startsWith("Khyber Pakhtunkhwa"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_kpk_small));
+                        if(team1.startsWith("Sindh"))
+                            iv_Teamone.setBackground(getResources().getDrawable(R.drawable.flag_sindh_small));
                     }
 
-                    for (int k = 0; k < 6; k++) {
-                        if (team2.startsWith("Islamabad"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_islamabad_small));
-                        if (team2.startsWith("Karachi"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_karachi_small));
-                        if (team2.startsWith("Lahore"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_lahore_small));
-                        if (team2.startsWith("Peshawar"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_peshawar_small));
-                        if (team2.startsWith("Multan"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_multan_small));
-                        if (team2.startsWith("Quetta"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_quetta_small));
-                        if (team2.startsWith("Pakistan"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_pakistan_small));
-                        if (team2.startsWith("Australia"))
-                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_australia_small));
+                    for (int k = 0; k < 5; k++) {
+                        if(team2.startsWith("Punjab"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_punjab_small));
+                        if(team2.startsWith("Balochistan"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_balo_small));
+                        if(team2.startsWith("Federal Areas"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_fed_small));
+                        if(team2.startsWith("Khyber Pakhtunkhwa"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_kpk_small));
+                        if(team2.startsWith("Sindh"))
+                            iv_teamtwo.setBackground(getResources().getDrawable(R.drawable.flag_sindh_small));
                     }
                     return minutes_difference;
                 }

@@ -1,5 +1,7 @@
 package com.psl.classes;
 
+import android.util.Log;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -482,6 +484,57 @@ public class XMLParser {
             e.printStackTrace();
         }
         return list;
+    }
+
+
+    public List<PrizesClass> getPrizesData() {
+        String result = "";
+        List<PrizesClass> fixtureList = new ArrayList<PrizesClass>();
+        try {
+            doc.getDocumentElement().normalize();
+            System.out.println("Root element :"
+                    + doc.getDocumentElement().getNodeName());
+            NodeList nList = doc.getElementsByTagName("tblPrize_prizes");
+            int length = nList.getLength();
+
+            for (int i = 0; i < length; i++) {
+                Node nNode = nList.item(i);
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    PrizesClass prizesClass = new PrizesClass();
+                    Log.e("league.season2",i+". "+ eElement.getElementsByTagName("position").item(0).getTextContent());
+                    try {
+                        result = eElement.getElementsByTagName("heading").item(0).getTextContent();
+                        prizesClass.setHeading(result);
+                    } catch (Exception e) {
+                    }
+
+                    try {
+                        result = eElement.getElementsByTagName("position").item(0).getTextContent();
+                        prizesClass.setPosition(result);
+                    } catch (Exception e) {
+                    }
+                    try {
+                        result = eElement.getElementsByTagName("value").item(0).getTextContent();
+                        prizesClass.setValue(result);
+                    } catch (Exception e) {
+                    }
+
+                    try {
+                        result = eElement.getElementsByTagName("cd").item(0).getTextContent();
+                        prizesClass.setCd(result);
+                    } catch (Exception e) {
+                    }
+
+
+                    fixtureList.add(prizesClass);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fixtureList;
     }
 
     public List<JsLocationsVO> getLocationsData() {

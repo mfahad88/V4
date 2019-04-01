@@ -31,6 +31,8 @@ import org.ksoap2.serialization.SoapObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,7 +46,8 @@ public class GoldFinanceFragment extends Fragment implements View.OnClickListene
     DatabaseHandler dbhandler;
     String comment;
     boolean isCity=false;
-
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,7 +107,10 @@ public class GoldFinanceFragment extends Fragment implements View.OnClickListene
         spinner.setAdapter(dataAdapter);
     }
 
-
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.iv_save){
@@ -126,7 +132,11 @@ public class GoldFinanceFragment extends Fragment implements View.OnClickListene
                 }
 
                 if(isCity){
-                    new SendEmail().execute(name.getText().toString(), email.getText().toString(), mobile.getText().toString(), comment+"; city="+city.getText().toString());
+                    if(validateEmail(email.getText().toString())) {
+                        new SendEmail().execute(name.getText().toString(), email.getText().toString(), mobile.getText().toString(), comment + "; city=" + city.getText().toString());
+                    }else{
+                        Config.getAlert(getActivity(),"Please enter correct email address");
+                    }
                 }else{
                     Config.getAlert(getActivity(),"Please enter correct city");
                 }
